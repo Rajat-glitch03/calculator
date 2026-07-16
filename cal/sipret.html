@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js for the interactive chart -->
+    <!-- Chart.js for the interactive line graph -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -25,7 +25,7 @@
             appearance: none;
             width: 100%;
             height: 6px;
-            background: #16A34A;
+            background: #e2e8f0;
             border-radius: 9999px;
             outline: none;
         }
@@ -34,7 +34,7 @@
             appearance: none;
             width: 18px;
             height: 18px;
-            background: #64748B;
+            background: #2563eb;
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.1s ease;
@@ -47,7 +47,7 @@
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
     <!-- Calculator Container -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8">
         
         <!-- Back Navigation Button -->
         <a href="../index.html" class="text-slate-500 hover:text-slate-900 transition mb-6 inline-flex items-center gap-2 text-sm font-medium">
@@ -63,63 +63,65 @@
         </div>
 
         <!-- Dynamic Interface Workspace -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
             <!-- LEFT PANEL: Controls & Inputs -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 flex flex-col justify-between">
                 
-                <!-- Input 1: Monthly Investment -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Monthly Investment</label>
-                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
-                            <span class="text-slate-400 mr-1 text-sm">₹</span>
-                            <input type="number" id="monthlyInput" value="25000" min="500" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                <div class="space-y-6">
+                    <!-- Input 1: Monthly Investment -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-semibold text-slate-600">Monthly Investment</label>
+                            <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                                <span class="text-slate-400 mr-1 text-sm">₹</span>
+                                <input type="number" id="monthlyInput" value="25000" min="500" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            </div>
+                        </div>
+                        <input type="range" id="monthlySlider" min="500" max="1000000" step="500" value="25000">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                            <span>₹500</span>
+                            <span>₹10L</span>
                         </div>
                     </div>
-                    <input type="range" id="monthlySlider" min="500" max="1000000" step="500" value="25000">
-                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>₹500</span>
-                        <span>₹10L</span>
+
+                    <!-- Input 2: Expected Return Rate -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                            <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
+                                <input type="number" id="rateInput" value="12" min="1" max="30" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                                <span class="text-slate-400 ml-1 text-sm">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rateSlider" min="1" max="30" step="0.5" value="12">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                            <span>1%</span>
+                            <span>30%</span>
+                        </div>
+                    </div>
+
+                    <!-- Input 3: Time Period -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-semibold text-slate-600">Time Period</label>
+                            <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                                <input type="number" id="timeInput" value="10" min="1" max="40" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                                <span class="text-slate-400 ml-1 text-sm">Yr</span>
+                            </div>
+                        </div>
+                        <input type="range" id="timeSlider" min="1" max="40" step="1" value="10">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                            <span>1 Yr</span>
+                            <span>40 Yr</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Input 2: Expected Return Rate -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
-                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
-                            <input type="number" id="rateInput" value="12" min="1" max="30" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
-                            <span class="text-slate-400 ml-1 text-sm">%</span>
-                        </div>
-                    </div>
-                    <input type="range" id="rateSlider" min="1" max="30" step="0.5" value="12">
-                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>1%</span>
-                        <span>30%</span>
-                    </div>
-                </div>
-
-                <!-- Input 3: Time Period -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Time Period</label>
-                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
-                            <input type="number" id="timeInput" value="10" min="1" max="40" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
-                            <span class="text-slate-400 ml-1 text-sm">Yr</span>
-                        </div>
-                    </div>
-                    <input type="range" id="timeSlider" min="1" max="40" step="1" value="10">
-                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>1 Yr</span>
-                        <span>40 Yr</span>
-                    </div>
-                </div>
-
-                <hr class="border-slate-100">
+                <hr class="border-slate-100 my-4">
 
                 <!-- Financial Statement Summary -->
-                <div class="space-y-3 pt-2">
+                <div class="space-y-3">
                     <div class="flex justify-between text-sm">
                         <span class="text-slate-500">Total Investment</span>
                         <span class="font-bold text-slate-900" id="displayInvested">₹0</span>
@@ -130,27 +132,27 @@
                     </div>
                     <div class="flex justify-between text-base border-t border-dashed border-slate-200 pt-3">
                         <span class="font-semibold text-slate-700">Total Value</span>
-                        <span class="font-extrabold text-blue-600" id="displayTotal">₹0</span>
+                        <span class="font-extrabold text-emerald-600" id="displayTotal">₹0</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- RIGHT PANEL: Chart Visualization Layer -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
-                <div class="w-full max-w-[280px] aspect-square relative flex items-center justify-center">
-                    <canvas id="sipChart"></canvas>
+            <!-- RIGHT PANEL: Line Chart Visualization Layer -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[400px]">
+                <div class="w-full flex-grow relative min-h-[280px]">
+                    <canvas id="sipLineChart"></canvas>
                 </div>
 
                 <!-- Custom Financial Legend Bottom Alignment -->
-                <div class="flex flex-wrap justify-center gap-6 mt-8 w-full border-t border-slate-50 pt-6">
+                <div class="flex flex-wrap justify-center gap-6 mt-6 w-full border-t border-slate-100 pt-4">
                     <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded-full bg-blue-600"></div>
-                        <span class="text-xs font-medium text-slate-600">Total Investment</span>
+                        <div class="w-3.5 h-1.5 rounded-full" style="background-color: #f59e0b;"></div>
+                        <span class="text-xs font-semibold text-slate-600">Total Investment</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                        <span class="text-xs font-medium text-slate-600">Estimated Gains</span>
+                        <div class="w-3.5 h-1.5 rounded-full" style="background-color: #39e75f;"></div>
+                        <span class="text-xs font-semibold text-slate-600">Future Wealth Value</span>
                     </div>
                 </div>
             </div>
@@ -182,33 +184,75 @@
             return '₹' + Math.round(value).toLocaleString('en-IN');
         };
 
-        // Chart Initialization Context Matrix
-        const ctx = document.getElementById('sipChart').getContext('2d');
-        let sipChart = new Chart(ctx, {
-            type: 'doughnut',
+        // Line Chart Initialization Context Matrix
+        const ctx = document.getElementById('sipLineChart').getContext('2d');
+        let sipLineChart = new Chart(ctx, {
+            type: 'line',
             data: {
-                labels: ['Total Investment', 'Estimated Gains'],
-                datasets: [{
-                    data: [0, 0],
-                    backgroundColor: ['#f59e0b', '#39e75f'], // Blue and Yellow (Amber) Colors
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
+                labels: [], // Populated dynamically (Years)
+                datasets: [
+                    {
+                        label: 'Total Investment',
+                        data: [], // Populated dynamically
+                        borderColor: '#f59e0b', // Yellow / Amber
+                        backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                        borderWidth: 3,
+                        pointRadius: 2,
+                        pointHoverRadius: 6,
+                        tension: 0.2,
+                        fill: true
+                    },
+                    {
+                        label: 'Future Wealth Value',
+                        data: [], // Populated dynamically
+                        borderColor: '#39e75f', // Vibrant Green
+                        backgroundColor: 'rgba(57, 231, 95, 0.05)',
+                        borderWidth: 3,
+                        pointRadius: 2,
+                        pointHoverRadius: 6,
+                        tension: 0.2,
+                        fill: true
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return ` ${context.label}: ${formatINR(context.raw)}`;
+                                return ` ${context.dataset.label}: ${formatINR(context.raw)}`;
                             }
                         }
                     }
                 },
-                cutout: '72%'
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Timeline (Years)',
+                            font: { family: 'DM Sans', weight: 'bold', size: 11 }
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + ' Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + ' L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + ' K';
+                                return '₹' + value;
+                            }
+                        },
+                        grid: { color: 'rgba(241, 245, 249, 1)' }
+                    }
+                }
             }
         });
 
@@ -216,24 +260,45 @@
         function calculateSIP() {
             const P = parseFloat(monthlyInput.value);
             const annualRate = parseFloat(rateInput.value);
-            const years = parseFloat(timeInput.value);
+            const years = parseInt(timeInput.value);
 
             const i = (annualRate / 100) / 12; // Monthly periodic rate
-            const n = years * 12; // Total installments count
+            
+            let labels = [];
+            let investedData = [];
+            let wealthData = [];
 
-            // SIP Formula Structure Validation
-            const totalValue = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-            const totalInvested = P * n;
-            const totalGains = totalValue - totalInvested;
+            // Generate growth datasets year-by-year for plotting
+            for (let t = 0; t <= years; t++) {
+                labels.push(`Yr ${t}`);
+                if (t === 0) {
+                    investedData.push(0);
+                    wealthData.push(0);
+                } else {
+                    const months = t * 12;
+                    const totalInvested = P * months;
+                    const futureValue = P * ((Math.pow(1 + i, months) - 1) / i) * (1 + i);
+                    
+                    investedData.push(totalInvested);
+                    wealthData.push(futureValue);
+                }
+            }
+
+            // Final total values
+            const finalInvested = investedData[investedData.length - 1];
+            const finalValue = wealthData[wealthData.length - 1];
+            const finalGains = finalValue - finalInvested;
 
             // DOM Visual Elements Sync Insertion
-            displayInvested.innerText = formatINR(totalInvested);
-            displayGains.innerText = formatINR(totalGains);
-            displayTotal.innerText = formatINR(totalValue);
+            displayInvested.innerText = formatINR(finalInvested);
+            displayGains.innerText = formatINR(finalGains);
+            displayTotal.innerText = formatINR(finalValue);
 
-            // Live Update Render Engine Injection
-            sipChart.data.datasets[0].data = [totalInvested, totalGains];
-            sipChart.update();
+            // Update Chart datasets
+            sipLineChart.data.labels = labels;
+            sipLineChart.data.datasets[0].data = investedData;
+            sipLineChart.data.datasets[1].data = wealthData;
+            sipLineChart.update();
         }
 
         // Control Sync Listeners Bindings Matrix
