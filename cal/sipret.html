@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP Returns Calculator</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- DM Sans Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,143 +12,185 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
+    <!-- Chart.js for the interactive chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'DM Sans', sans-serif; background-color: #f8fafc; }
-        /* Style range sliders to be clean and modern */
-        input[type="range"] { -webkit-appearance: none; appearance: none; background: #e2e8f0; height: 6px; border-radius: 9999px; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Style input range sliders nicely */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen p-4 md:p-8 flex flex-col items-center">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <div class="max-w-4xl w-full">
-        <!-- Back Button -->
+    <!-- Calculator Container -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <!-- Back Navigation Button -->
         <a href="../index.html" class="text-slate-500 hover:text-slate-900 transition mb-6 inline-flex items-center gap-2 text-sm font-medium">
             <i class="fa-solid fa-arrow-left"></i> Back to Calculators
         </a>
 
         <!-- Header -->
-        <header class="mb-8 text-center md:text-left">
-            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">SIP Returns</h1>
-            <div class="w-12 h-1 bg-blue-600 rounded mt-2 mx-auto md:mx-0"></div>
-        </header>
+        <div class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+                SIP Returns
+            </h1>
+            <div class="w-12 h-[3px] bg-blue-600 mt-3 rounded-full"></div>
+        </div>
 
-        <!-- Main Workspace Container -->
-        <!-- Order changes for mobile using flex column direction rules -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col md:flex-row gap-8">
+        <!-- Dynamic Interface Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             
-            <!-- GRAPH CONTAINER (Forces to the top on mobile) -->
-            <div class="w-full md:w-1/2 flex flex-col items-center justify-center order-1 md:order-2 bg-slate-50/50 rounded-xl p-4 border border-slate-100">
-                <div class="relative w-64 h-64">
+            <!-- LEFT PANEL: Controls & Inputs -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                
+                <!-- Input 1: Monthly Investment -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Monthly Investment</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                            <span class="text-slate-400 mr-1 text-sm">₹</span>
+                            <input type="number" id="monthlyInput" value="25000" min="500" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="monthlySlider" min="500" max="1000000" step="500" value="25000">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>₹500</span>
+                        <span>₹10L</span>
+                    </div>
+                </div>
+
+                <!-- Input 2: Expected Return Rate -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
+                            <input type="number" id="rateInput" value="12" min="1" max="30" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rateSlider" min="1" max="30" step="0.5" value="12">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>1%</span>
+                        <span>30%</span>
+                    </div>
+                </div>
+
+                <!-- Input 3: Time Period -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Time Period</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                            <input type="number" id="timeInput" value="10" min="1" max="40" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yr</span>
+                        </div>
+                    </div>
+                    <input type="range" id="timeSlider" min="1" max="40" step="1" value="10">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>1 Yr</span>
+                        <span>40 Yr</span>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Financial Statement Summary -->
+                <div class="space-y-3 pt-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-500">Total Investment</span>
+                        <span class="font-bold text-slate-900" id="displayInvested">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-500">Est. Returns</span>
+                        <span class="font-bold text-slate-900" id="displayGains">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-base border-t border-dashed border-slate-200 pt-3">
+                        <span class="font-semibold text-slate-700">Total Value</span>
+                        <span class="font-extrabold text-blue-600" id="displayTotal">₹0</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL: Chart Visualization Layer -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
+                <div class="w-full max-w-[280px] aspect-square relative flex items-center justify-center">
                     <canvas id="sipChart"></canvas>
                 </div>
-                
-                <!-- Custom Graph Legends & Summary Info at the Bottom of Graph -->
-                <div class="mt-6 w-full space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
-                        <span class="flex items-center gap-2 font-medium text-slate-600">
-                            <span class="w-3 h-3 rounded-full bg-blue-600 inline-block"></span> Total Investment
-                        </span>
-                        <span class="font-bold text-slate-900" id="lblInvested">₹0</span>
+
+                <!-- Custom Financial Legend Bottom Alignment -->
+                <div class="flex flex-wrap justify-center gap-6 mt-8 w-full border-t border-slate-50 pt-6">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-blue-600"></div>
+                        <span class="text-xs font-medium text-slate-600">Total Investment</span>
                     </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
-                        <span class="flex items-center gap-2 font-medium text-slate-600">
-                            <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Est. Gains
-                        </span>
-                        <span class="font-bold text-amber-600" id="lblGains">₹0</span>
-                    </div>
-                    <div class="flex justify-between items-center text-base pt-1 font-bold">
-                        <span class="text-slate-800">Total Value</span>
-                        <span class="text-emerald-600 text-lg" id="lblTotal">₹0</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                        <span class="text-xs font-medium text-slate-600">Estimated Gains</span>
                     </div>
                 </div>
             </div>
 
-            <!-- INPUTS CONTAINER (Pushed below graph on mobile) -->
-            <div class="w-full md:w-1/2 space-y-6 order-2 md:order-1">
-                
-                <!-- 1. Monthly Investment -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-700">Monthly Investment</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 text-sm">₹</span>
-                            <input type="number" id="numMonthly" value="5000" min="500" max="1000000" step="500" class="w-28 pl-6 pr-2 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
-                        </div>
-                    </div>
-                    <input type="range" id="rngMonthly" min="500" max="100000" step="500" value="5000" class="w-full accent-blue-600">
-                </div>
-
-                <!-- 2. Expected Return Rate -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-700">Expected Return Rate (p.a.)</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <input type="number" id="numRate" value="12" min="1" max="30" step="0.5" class="w-20 pr-5 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
-                            <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-500 text-xs">%</span>
-                        </div>
-                    </div>
-                    <input type="range" id="rngRate" min="1" max="30" step="0.5" value="12" class="w-full accent-blue-600">
-                </div>
-
-                <!-- 3. Time Period -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-700">Time Period</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <input type="number" id="numYears" value="10" min="1" max="40" class="w-20 pr-8 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
-                            <span class="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-500 text-xs font-medium">Yrs</span>
-                        </div>
-                    </div>
-                    <input type="range" id="rngYears" min="1" max="40" value="10" class="w-full accent-blue-600">
-                </div>
-
-                <!-- 4. Annual Top-Up (Step-Up) -->
-                <div class="border-t border-slate-100 pt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <div>
-                            <label class="text-sm font-semibold text-slate-700 block">Annual Top-Up</label>
-                            <span class="text-[10px] text-slate-400 font-normal">Increase contribution yearly</span>
-                        </div>
-                        <div class="relative rounded-md shadow-sm">
-                            <input type="number" id="numTopUp" value="10" min="0" max="50" class="w-20 pr-5 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
-                            <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-500 text-xs">%</span>
-                        </div>
-                    </div>
-                    <input type="range" id="rngTopUp" min="0" max="50" value="10" class="w-full accent-blue-600">
-                </div>
-
-            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Script Handling Calculations & Graph Syncing -->
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-400 font-medium tracking-wide bg-white mt-12">
+        <p>&copy; 2026 Investment Calculators Hub.</p>
+    </footer>
+
+    <!-- Logic Controller Matrix -->
     <script>
-        // DOM Element Definitions
-        const inputs = {
-            monthly: { num: document.getElementById('numMonthly'), rng: document.getElementById('rngMonthly') },
-            rate: { num: document.getElementById('numRate'), rng: document.getElementById('rngRate') },
-            years: { num: document.getElementById('numYears'), rng: document.getElementById('rngYears') },
-            topUp: { num: document.getElementById('numTopUp'), rng: document.getElementById('rngTopUp') }
+        // DOM Elements
+        const monthlySlider = document.getElementById('monthlySlider');
+        const monthlyInput = document.getElementById('monthlyInput');
+        const rateSlider = document.getElementById('rateSlider');
+        const rateInput = document.getElementById('rateInput');
+        const timeSlider = document.getElementById('timeSlider');
+        const timeInput = document.getElementById('timeInput');
+
+        const displayInvested = document.getElementById('displayInvested');
+        const displayGains = document.getElementById('displayGains');
+        const displayTotal = document.getElementById('displayTotal');
+
+        // Formatter using Indian Standard Currency Format (INR)
+        const formatINR = (value) => {
+            return '₹' + Math.round(value).toLocaleString('en-IN');
         };
 
-        const display = {
-            invested: document.getElementById('lblInvested'),
-            gains: document.getElementById('lblGains'),
-            total: document.getElementById('lblTotal')
-        };
-
-        // Initialize Chart.js Doughnut Graph (Blue for Investment, Yellow for Gains)
+        // Chart Initialization Context Matrix
         const ctx = document.getElementById('sipChart').getContext('2d');
-        const sipChart = new Chart(ctx, {
+        let sipChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Total Investment', 'Est. Gains'],
+                labels: ['Total Investment', 'Estimated Gains'],
                 datasets: [{
                     data: [0, 0],
-                    backgroundColor: ['#2563eb', '#fbbf24'],
+                    backgroundColor: ['#2563eb', '#f59e0b'], // Blue and Yellow (Amber) Colors
                     borderWidth: 0,
                     hoverOffset: 4
                 }]
@@ -156,64 +198,67 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                cutout: '70%'
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.label}: ${formatINR(context.raw)}`;
+                            }
+                        }
+                    }
+                },
+                cutout: '72%'
             }
         });
 
-        // Sync Slider and Input field numbers
-        function bindInputPair(pair) {
-            pair.num.addEventListener('input', () => { pair.rng.value = pair.num.value; calculateSIP(); });
-            pair.rng.addEventListener('input', () => { pair.num.value = pair.rng.value; calculateSIP(); });
-        }
-        Object.values(inputs).forEach(bindInputPair);
-
-        // Indian Currency Formatter
-        function formatINR(value) {
-            return new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0
-            }).format(value);
-        }
-
-        // Calculation Core Engine
+        // Core Formula Logic Calculation
         function calculateSIP() {
-            let initialMonthly = parseFloat(inputs.monthly.num.value) || 0;
-            const annualRate = parseFloat(inputs.rate.num.value) || 0;
-            const years = parseInt(inputs.years.num.value) || 0;
-            const topUpPercent = parseFloat(inputs.topUp.num.value) || 0;
+            const P = parseFloat(monthlyInput.value);
+            const annualRate = parseFloat(rateInput.value);
+            const years = parseFloat(timeInput.value);
 
-            const monthlyRate = (annualRate / 100) / 12;
-            
-            let totalInvested = 0;
-            let futureValue = 0;
-            let currentMonthly = initialMonthly;
+            const i = (annualRate / 100) / 12; // Monthly periodic rate
+            const n = years * 12; // Total installments count
 
-            // Compute values year-by-year to precisely evaluate the annual top-up step functions
-            for (let year = 1; year <= years; year++) {
-                for (let month = 1; month <= 12; month++) {
-                    totalInvested += currentMonthly;
-                    // Compound existing future valuation and the new contribution
-                    futureValue = (futureValue + currentMonthly) * (1 + monthlyRate);
-                }
-                // Step up dynamic contribution capacity at start of next year cycle
-                currentMonthly = currentMonthly * (1 + (topUpPercent / 100));
-            }
+            // SIP Formula Structure Validation
+            const totalValue = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            const totalInvested = P * n;
+            const totalGains = totalValue - totalInvested;
 
-            const estGains = Math.max(0, futureValue - totalInvested);
+            // DOM Visual Elements Sync Insertion
+            displayInvested.innerText = formatINR(totalInvested);
+            displayGains.innerText = formatINR(totalGains);
+            displayTotal.innerText = formatINR(totalValue);
 
-            // Update DOM textual labels
-            display.invested.innerText = formatINR(totalInvested);
-            display.gains.innerText = formatINR(estGains);
-            display.total.innerText = formatINR(futureValue);
-
-            // Refresh Live Rendering Graph Layout Data array directly
-            sipChart.data.datasets[0].data = [totalInvested, estGains];
+            // Live Update Render Engine Injection
+            sipChart.data.datasets[0].data = [totalInvested, totalGains];
             sipChart.update();
         }
 
-        // Run calculation on primary launch
+        // Control Sync Listeners Bindings Matrix
+        function syncControl(slider, input) {
+            slider.addEventListener('input', () => { input.value = slider.value; calculateSIP(); });
+            input.addEventListener('input', () => {
+                if(input.value === '') return;
+                let val = parseFloat(input.value);
+                if(val < parseFloat(input.min)) val = parseFloat(input.min);
+                if(val > parseFloat(input.max)) val = parseFloat(input.max);
+                slider.value = val;
+                calculateSIP();
+            });
+            input.addEventListener('blur', () => {
+                if(input.value === '' || parseFloat(input.value) < parseFloat(input.min)) input.value = input.min;
+                slider.value = input.value;
+                calculateSIP();
+            });
+        }
+
+        syncControl(monthlySlider, monthlyInput);
+        syncControl(rateSlider, rateInput);
+        syncControl(timeSlider, timeInput);
+
+        // Initial Calculation Trigger
         calculateSIP();
     </script>
 </body>
