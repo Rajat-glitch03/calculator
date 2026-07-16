@@ -4,303 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP Returns Calculator</title>
-    <!-- Tailwind CSS for modern layouts -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- DM Sans Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-    <!-- Font Awesome for sharp UI icons -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js for beautiful canvas rendering -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: #f8fafc; /* Premium light slate canvas */
-        }
-        /* Custom styles for range slider thumb */
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            background: #e2e8f0;
-            height: 6px;
-            border-radius: 9999px;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #2563eb; /* Royal blue slider handle */
-            cursor: pointer;
-            transition: transform 0.1s ease;
-        }
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
+        body { font-family: 'DM Sans', sans-serif; background-color: #f8fafc; }
+        /* Style range sliders to be clean and modern */
+        input[type="range"] { -webkit-appearance: none; appearance: none; background: #e2e8f0; height: 6px; border-radius: 9999px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="text-slate-800 min-h-screen p-4 md:p-8 flex flex-col items-center">
 
-    <!-- Header Navigation Section -->
-    <header class="bg-white border-b border-slate-100 py-6 px-4 relative shadow-sm">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <!-- Back arrow redirecting to the main list -->
-            <a href="../index.html" class="flex items-center space-x-2 text-slate-600 hover:text-black transition-colors">
-                <i class="fa-solid fa-arrow-left text-lg"></i>
-                <span class="text-sm font-medium hidden sm:inline">Back to Hub</span>
-            </a>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-wider uppercase text-slate-950 text-center flex-grow">
-                SIP Returns
-            </h1>
-            <div class="w-10 sm:w-20"></div> <!-- Spatial balancing spacer -->
-        </div>
-    </header>
+    <div class="max-w-4xl w-full">
+        <!-- Back Button -->
+        <a href="../index.html" class="text-slate-500 hover:text-slate-900 transition mb-6 inline-flex items-center gap-2 text-sm font-medium">
+            <i class="fa-solid fa-arrow-left"></i> Back to Calculators
+        </a>
 
-    <!-- Main Dynamic Application Container -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-6 py-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Header -->
+        <header class="mb-8 text-center md:text-left">
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">SIP Returns</h1>
+            <div class="w-12 h-1 bg-blue-600 rounded mt-2 mx-auto md:mx-0"></div>
+        </header>
+
+        <!-- Main Workspace Container -->
+        <!-- Order changes for mobile using flex column direction rules -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col md:flex-row gap-8">
             
-            <!-- Left Panel: Calculation Sliders (lg:span-7) -->
-            <section class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between lg:col-span-7">
-                <div class="space-y-8">
-                    
-                    <!-- 1. Monthly Investment -->
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <label for="monthly-investment" class="text-sm font-bold tracking-wide text-slate-500 uppercase">Monthly Investment</label>
-                            <div class="flex items-center space-x-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1">
-                                <span class="text-slate-400 font-medium">$</span>
-                                <input type="number" id="input-monthly-investment" value="1000" min="10" max="100000" class="bg-transparent font-bold text-slate-900 w-20 text-right focus:outline-none focus:ring-0">
-                            </div>
-                        </div>
-                        <input type="range" id="slider-monthly-investment" min="10" max="100000" step="50" value="1000" class="w-full cursor-pointer">
-                        <div class="flex justify-between text-xs text-slate-400">
-                            <span>$10</span>
-                            <span>$100,000</span>
-                        </div>
-                    </div>
-
-                    <!-- 2. Expected Return Rate -->
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <label for="return-rate" class="text-sm font-bold tracking-wide text-slate-500 uppercase">Expected Return Rate (p.a.)</label>
-                            <div class="flex items-center space-x-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1">
-                                <input type="number" id="input-return-rate" value="12" min="1" max="30" step="0.1" class="bg-transparent font-bold text-slate-900 w-12 text-right focus:outline-none focus:ring-0">
-                                <span class="text-slate-400 font-medium">%</span>
-                            </div>
-                        </div>
-                        <input type="range" id="slider-return-rate" min="1" max="30" step="0.1" value="12" class="w-full cursor-pointer">
-                        <div class="flex justify-between text-xs text-slate-400">
-                            <span>1%</span>
-                            <span>30%</span>
-                        </div>
-                    </div>
-
-                    <!-- 3. Time Period -->
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <label for="time-period" class="text-sm font-bold tracking-wide text-slate-500 uppercase">Duration</label>
-                            <div class="flex items-center space-x-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1">
-                                <input type="number" id="input-time-period" value="10" min="1" max="40" class="bg-transparent font-bold text-slate-900 w-12 text-right focus:outline-none focus:ring-0">
-                                <span class="text-slate-400 font-medium">Yrs</span>
-                            </div>
-                        </div>
-                        <input type="range" id="slider-time-period" min="1" max="40" step="1" value="10" class="w-full cursor-pointer">
-                        <div class="flex justify-between text-xs text-slate-400">
-                            <span>1 Year</span>
-                            <span>40 Years</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Live Key Figure Displays at the Bottom -->
-                <div class="border-t border-slate-100 mt-8 pt-6 grid grid-cols-3 gap-2 text-center">
-                    <div>
-                        <p class="text-[10px] md:text-xs font-bold tracking-wider text-slate-400 uppercase">Invested</p>
-                        <p id="display-invested" class="text-base md:text-xl font-extrabold text-blue-600 mt-1">$120,000</p>
-                    </div>
-                    <div class="border-x border-slate-100">
-                        <p class="text-[10px] md:text-xs font-bold tracking-wider text-slate-400 uppercase">Est. Returns</p>
-                        <p id="display-gains" class="text-base md:text-xl font-extrabold text-yellow-500 mt-1">$112,339</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] md:text-xs font-bold tracking-wider text-slate-400 uppercase">Total Value</p>
-                        <p id="display-total" class="text-base md:text-xl font-extrabold text-slate-900 mt-1">$232,339</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Right Panel: Visual Graph Presentation (lg:span-5) -->
-            <section class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between items-center lg:col-span-5">
-                <h3 class="text-base font-bold tracking-wide text-slate-400 uppercase self-start mb-4">Investment Split</h3>
-                
-                <!-- Chart Wrapper -->
-                <div class="relative w-full max-w-[280px] md:max-w-[320px] aspect-square flex items-center justify-center">
+            <!-- GRAPH CONTAINER (Forces to the top on mobile) -->
+            <div class="w-full md:w-1/2 flex flex-col items-center justify-center order-1 md:order-2 bg-slate-50/50 rounded-xl p-4 border border-slate-100">
+                <div class="relative w-64 h-64">
                     <canvas id="sipChart"></canvas>
                 </div>
-
-                <!-- Custom Bottom Legend with matching design -->
-                <div class="mt-6 w-full space-y-3 pt-6 border-t border-slate-100">
-                    <div class="flex justify-between items-center text-sm">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-3.5 h-3.5 rounded bg-blue-600"></span>
-                            <span class="text-slate-600 font-medium">Total Investment</span>
-                        </div>
-                        <span id="legend-invested-val" class="font-bold text-slate-900">$120,000</span>
+                
+                <!-- Custom Graph Legends & Summary Info at the Bottom of Graph -->
+                <div class="mt-6 w-full space-y-3">
+                    <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                        <span class="flex items-center gap-2 font-medium text-slate-600">
+                            <span class="w-3 h-3 rounded-full bg-blue-600 inline-block"></span> Total Investment
+                        </span>
+                        <span class="font-bold text-slate-900" id="lblInvested">₹0</span>
                     </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-3.5 h-3.5 rounded bg-yellow-400"></span>
-                            <span class="text-slate-600 font-medium">Wealth Gained</span>
-                        </div>
-                        <span id="legend-gains-val" class="font-bold text-slate-900">$112,339</span>
+                    <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                        <span class="flex items-center gap-2 font-medium text-slate-600">
+                            <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Est. Gains
+                        </span>
+                        <span class="font-bold text-amber-600" id="lblGains">₹0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-base pt-1 font-bold">
+                        <span class="text-slate-800">Total Value</span>
+                        <span class="text-emerald-600 text-lg" id="lblTotal">₹0</span>
                     </div>
                 </div>
-            </section>
+            </div>
 
+            <!-- INPUTS CONTAINER (Pushed below graph on mobile) -->
+            <div class="w-full md:w-1/2 space-y-6 order-2 md:order-1">
+                
+                <!-- 1. Monthly Investment -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-700">Monthly Investment</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 text-sm">₹</span>
+                            <input type="number" id="numMonthly" value="5000" min="500" max="1000000" step="500" class="w-28 pl-6 pr-2 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="rngMonthly" min="500" max="100000" step="500" value="5000" class="w-full accent-blue-600">
+                </div>
+
+                <!-- 2. Expected Return Rate -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-700">Expected Return Rate (p.a.)</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <input type="number" id="numRate" value="12" min="1" max="30" step="0.5" class="w-20 pr-5 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
+                            <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-500 text-xs">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rngRate" min="1" max="30" step="0.5" value="12" class="w-full accent-blue-600">
+                </div>
+
+                <!-- 3. Time Period -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-700">Time Period</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <input type="number" id="numYears" value="10" min="1" max="40" class="w-20 pr-8 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
+                            <span class="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-500 text-xs font-medium">Yrs</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rngYears" min="1" max="40" value="10" class="w-full accent-blue-600">
+                </div>
+
+                <!-- 4. Annual Top-Up (Step-Up) -->
+                <div class="border-t border-slate-100 pt-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700 block">Annual Top-Up</label>
+                            <span class="text-[10px] text-slate-400 font-normal">Increase contribution yearly</span>
+                        </div>
+                        <div class="relative rounded-md shadow-sm">
+                            <input type="number" id="numTopUp" value="10" min="0" max="50" class="w-20 pr-5 py-1 text-right font-bold text-blue-600 border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 text-sm">
+                            <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-500 text-xs">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rngTopUp" min="0" max="50" value="10" class="w-full accent-blue-600">
+                </div>
+
+            </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400 font-medium tracking-wide">
-        <p>&copy; 2026 Investment Calculators Hub. Engineered for mobile precision.</p>
-    </footer>
-
-    <!-- Chart Configuration and Calculation Script -->
+    <!-- Script Handling Calculations & Graph Syncing -->
     <script>
-        // Setup initial empty chart container variables
-        let chartInstance = null;
+        // DOM Element Definitions
+        const inputs = {
+            monthly: { num: document.getElementById('numMonthly'), rng: document.getElementById('rngMonthly') },
+            rate: { num: document.getElementById('numRate'), rng: document.getElementById('rngRate') },
+            years: { num: document.getElementById('numYears'), rng: document.getElementById('rngYears') },
+            topUp: { num: document.getElementById('numTopUp'), rng: document.getElementById('rngTopUp') }
+        };
 
-        // Dynamic elements declaration
-        const sliderMonthly = document.getElementById('slider-monthly-investment');
-        const inputMonthly = document.getElementById('input-monthly-investment');
+        const display = {
+            invested: document.getElementById('lblInvested'),
+            gains: document.getElementById('lblGains'),
+            total: document.getElementById('lblTotal')
+        };
 
-        const sliderRate = document.getElementById('slider-return-rate');
-        const inputRate = document.getElementById('input-return-rate');
+        // Initialize Chart.js Doughnut Graph (Blue for Investment, Yellow for Gains)
+        const ctx = document.getElementById('sipChart').getContext('2d');
+        const sipChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Total Investment', 'Est. Gains'],
+                datasets: [{
+                    data: [0, 0],
+                    backgroundColor: ['#2563eb', '#fbbf24'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                cutout: '70%'
+            }
+        });
 
-        const sliderPeriod = document.getElementById('slider-time-period');
-        const inputPeriod = document.getElementById('input-time-period');
+        // Sync Slider and Input field numbers
+        function bindInputPair(pair) {
+            pair.num.addEventListener('input', () => { pair.rng.value = pair.num.value; calculateSIP(); });
+            pair.rng.addEventListener('input', () => { pair.num.value = pair.rng.value; calculateSIP(); });
+        }
+        Object.values(inputs).forEach(bindInputPair);
 
-        // Number formatter helper function
-        const formatCurrency = (val) => {
-            return new Intl.NumberFormat('en-US', {
+        // Indian Currency Formatter
+        function formatINR(value) {
+            return new Intl.NumberFormat('en-IN', {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'INR',
                 maximumFractionDigits: 0
-            }).format(val);
-        };
+            }).format(value);
+        }
 
-        // Main logic to compute investment growth
-        const calculateSIP = () => {
-            const P = parseFloat(inputMonthly.value) || 0;
-            const annualRate = parseFloat(inputRate.value) || 0;
-            const years = parseFloat(inputPeriod.value) || 0;
+        // Calculation Core Engine
+        function calculateSIP() {
+            let initialMonthly = parseFloat(inputs.monthly.num.value) || 0;
+            const annualRate = parseFloat(inputs.rate.num.value) || 0;
+            const years = parseInt(inputs.years.num.value) || 0;
+            const topUpPercent = parseFloat(inputs.topUp.num.value) || 0;
 
-            const i = (annualRate / 12) / 100;
-            const n = years * 12;
+            const monthlyRate = (annualRate / 100) / 12;
+            
+            let totalInvested = 0;
+            let futureValue = 0;
+            let currentMonthly = initialMonthly;
 
-            const totalInvested = P * n;
-            let totalValue = 0;
-
-            if (i === 0) {
-                totalValue = totalInvested;
-            } else {
-                // SIP standard growth formula
-                totalValue = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            // Compute values year-by-year to precisely evaluate the annual top-up step functions
+            for (let year = 1; year <= years; year++) {
+                for (let month = 1; month <= 12; month++) {
+                    totalInvested += currentMonthly;
+                    // Compound existing future valuation and the new contribution
+                    futureValue = (futureValue + currentMonthly) * (1 + monthlyRate);
+                }
+                // Step up dynamic contribution capacity at start of next year cycle
+                currentMonthly = currentMonthly * (1 + (topUpPercent / 100));
             }
 
-            const capitalGains = Math.max(0, totalValue - totalInvested);
+            const estGains = Math.max(0, futureValue - totalInvested);
 
-            // Update on-screen dynamic parameters
-            document.getElementById('display-invested').innerText = formatCurrency(totalInvested);
-            document.getElementById('display-gains').innerText = formatCurrency(capitalGains);
-            document.getElementById('display-total').innerText = formatCurrency(totalValue);
+            // Update DOM textual labels
+            display.invested.innerText = formatINR(totalInvested);
+            display.gains.innerText = formatINR(estGains);
+            display.total.innerText = formatINR(futureValue);
 
-            // Update bottom legend stats
-            document.getElementById('legend-invested-val').innerText = formatCurrency(totalInvested);
-            document.getElementById('legend-gains-val').innerText = formatCurrency(capitalGains);
+            // Refresh Live Rendering Graph Layout Data array directly
+            sipChart.data.datasets[0].data = [totalInvested, estGains];
+            sipChart.update();
+        }
 
-            updateChart(totalInvested, capitalGains);
-        };
-
-        // Dynamic Chart.js creation and updates
-        const updateChart = (invested, gains) => {
-            const ctx = document.getElementById('sipChart').getContext('2d');
-
-            if (chartInstance) {
-                chartInstance.data.datasets[0].data = [invested, gains];
-                chartInstance.update();
-            } else {
-                chartInstance = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Invested Amount', 'Wealth Gained'],
-                        datasets: [{
-                            data: [invested, gains],
-                            backgroundColor: ['#2563eb', '#facc15'], // Blue for Total Investment, Yellow for Gains
-                            borderColor: '#ffffff',
-                            borderWidth: 3,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false // Kept custom beautiful HTML legend instead of the default chart legend
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        label += formatCurrency(context.raw);
-                                        return label;
-                                    }
-                                }
-                            }
-                        },
-                        cutout: '70%' // Thin elegant doughnut ring
-                    }
-                });
-            }
-        };
-
-        // Input sync engine: binds corresponding slider and numeric input field
-        const bindInputControls = (slider, input) => {
-            slider.addEventListener('input', (e) => {
-                input.value = e.target.value;
-                calculateSIP();
-            });
-
-            input.addEventListener('input', (e) => {
-                let val = parseFloat(e.target.value);
-                const min = parseFloat(slider.min);
-                const max = parseFloat(slider.max);
-
-                if (isNaN(val)) val = min;
-                if (val < min) val = min;
-                if (val > max) val = max;
-
-                slider.value = val;
-                calculateSIP();
-            });
-        };
-
-        // Initialize synchronization bindings across controls
-        bindInputControls(sliderMonthly, inputMonthly);
-        bindInputControls(sliderRate, inputRate);
-        bindInputControls(sliderPeriod, inputPeriod);
-
-        // Run calculation once at initialization
+        // Run calculation on primary launch
         calculateSIP();
     </script>
 </body>
