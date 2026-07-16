@@ -57,7 +57,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 order-2 lg:order-1">
                 
                 <div>
                     <div class="flex justify-between items-center mb-2">
@@ -152,27 +152,26 @@
                     </div>
                 </div>
 
-                <hr class="border-slate-100">
+            </div>
 
-                <div class="space-y-3 pt-2">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-slate-500">Total Investment</span>
-                        <span class="font-bold text-slate-900" id="displayInvested">₹0</span>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[400px] order-1 lg:order-2">
+                
+                <div class="grid grid-cols-3 gap-2 pb-5 mb-5 border-b border-slate-100 text-center">
+                    <div>
+                        <span class="block text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Total Invested</span>
+                        <span class="text-xs md:text-base font-bold text-slate-900" id="displayInvested">₹0</span>
                     </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-slate-500">Est. Returns</span>
-                        <span class="font-bold text-slate-900" id="displayGains">₹0</span>
+                    <div>
+                        <span class="block text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Est. Returns</span>
+                        <span class="text-xs md:text-base font-bold text-slate-900" id="displayGains">₹0</span>
                     </div>
-                    <div class="flex justify-between text-base border-t border-dashed border-slate-200 pt-3">
-                        <span class="font-semibold text-slate-700">Total Value</span>
-                        <span class="font-extrabold text-blue-600" id="displayTotal">₹0</span>
+                    <div>
+                        <span class="block text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Total Value</span>
+                        <span class="text-xs md:text-base font-extrabold text-blue-600" id="displayTotal">₹0</span>
                     </div>
                 </div>
 
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[400px]">
-                <div class="w-full flex-grow relative min-h-[280px] max-h-[320px] flex items-center justify-center">
+                <div class="w-full flex-grow relative min-h-[260px] max-h-[300px] flex items-center justify-center">
                     <canvas id="sipChart"></canvas>
                 </div>
 
