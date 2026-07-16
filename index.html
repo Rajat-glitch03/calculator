@@ -3,140 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Calculators Hub</title>
+    <title>Calculators Hub</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DM Sans Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <!-- Font Awesome for sleek icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Smooth transitions for button hover effects */
-        .calc-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #0b0f17; /* Deep luxury dark background */
         }
-        .calc-card:hover {
-            transform: translateY(-4px);
+        /* Custom golden hover & glow transitions */
+        .gold-card {
+            background-color: #121824; /* Elevated dark container */
+            border: 1px solid rgba(212, 175, 55, 0.15); /* Soft gold border */
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gold-card:hover {
+            border-color: #d4af37; /* Matte Gold hover */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.15);
+        }
+        .gold-text {
+            color: #d4af37;
+        }
+        .gold-bg {
+            background-color: #d4af37;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between font-sans">
+<body class="text-slate-200 min-h-screen flex flex-col justify-between">
 
-    <header class="bg-white border-b border-slate-200 py-8 px-4 text-center shadow-sm">
+    <!-- Header Section -->
+    <header class="border-b border-slate-800/60 py-12 px-4 text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+            <h1 class="text-4xl md:text-5xl font-light tracking-widest uppercase gold-text">
                 Calculators
             </h1>
-            <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">
-                Plan your financial future. Choose one of our specialized investment calculators below to get started.
+            <div class="w-16 h-[2px] gold-bg mx-auto mt-4 opacity-80"></div>
+            <p class="mt-4 text-sm md:text-base text-slate-400 max-w-md mx-auto font-light tracking-wide">
+                Wealth building, refined. Select a portal below to project your financial future.
             </p>
         </div>
     </header>
 
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
+    <!-- Main Content: Grid of Luxury Calculator Buttons -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-6 py-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <a href="lumpsum.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-500 flex items-start space-x-4">
-                <div class="p-3 bg-blue-50 text-blue-600 rounded-xl">
-                    <i class="fa-solid fa-money-bill-wave text-2xl w-8 text-center"></i>
+            <!-- 1. Lumpsum -->
+            <a href="lumpsum.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-money-bill-wave text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Lumpsum</h2>
-                    <p class="text-sm text-slate-500 mt-1">Calculate returns for one-time investments.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Lumpsum</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Calculate returns for one-time capital investments.</p>
                 </div>
             </a>
 
-            <a href="regular-income.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-500 flex items-start space-x-4">
-                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                    <i class="fa-solid fa-wallet text-2xl w-8 text-center"></i>
+            <!-- 2. Regular Income -->
+            <a href="regular-income.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-wallet text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Regular Income</h2>
-                    <p class="text-sm text-slate-500 mt-1">Estimate steady payouts from your capital.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Regular Income</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Estimate steady, recurring payouts from your wealth.</p>
                 </div>
             </a>
 
-            <a href="sip.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-500 flex items-start space-x-4">
-                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
-                    <i class="fa-solid fa-arrow-trend-up text-2xl w-8 text-center"></i>
+            <!-- 3. SIP Returns -->
+            <a href="sip.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-arrow-trend-up text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">SIP Returns</h2>
-                    <p class="text-sm text-slate-500 mt-1">Grow your wealth with systematic monthly plans.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">SIP Returns</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Grow your assets with methodical monthly planning.</p>
                 </div>
             </a>
 
-            <a href="swp.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-purple-500 flex items-start space-x-4">
-                <div class="p-3 bg-purple-50 text-purple-600 rounded-xl">
-                    <i class="fa-solid fa-money-bill-transfer text-2xl w-8 text-center"></i>
+            <!-- 4. SWP -->
+            <a href="swp.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-money-bill-transfer text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">SWP</h2>
-                    <p class="text-sm text-slate-500 mt-1">Systematic Withdrawal Plan for regular cash flow.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">SWP</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Design systematic, tax-efficient capital withdrawal plans.</p>
                 </div>
             </a>
 
-            <a href="goal-setting.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-500 flex items-start space-x-4">
-                <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
-                    <i class="fa-solid fa-bullseye text-2xl w-8 text-center"></i>
+            <!-- 5. Goal Setting -->
+            <a href="goal-setting.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-bullseye text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Goal Setting</h2>
-                    <p class="text-sm text-slate-500 mt-1">Find out how much to save for future milestones.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Goal Setting</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Align your savings target with future ambitions.</p>
                 </div>
             </a>
 
-            <a href="retirement.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-rose-500 flex items-start space-x-4">
-                <div class="p-3 bg-rose-50 text-rose-600 rounded-xl">
-                    <i class="fa-solid fa-umbrella text-2xl w-8 text-center"></i>
+            <!-- 6. Retirement Fund -->
+            <a href="retirement.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-umbrella text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Retirement Fund</h2>
-                    <p class="text-sm text-slate-500 mt-1">Plan your nest egg to secure your golden years.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Retirement Fund</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Ensure dynamic security for your ultimate golden years.</p>
                 </div>
             </a>
 
-            <a href="education.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-cyan-500 flex items-start space-x-4">
-                <div class="p-3 bg-cyan-50 text-cyan-600 rounded-xl">
-                    <i class="fa-solid fa-graduation-cap text-2xl w-8 text-center"></i>
+            <!-- 7. Education -->
+            <a href="education.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-graduation-cap text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Education</h2>
-                    <p class="text-sm text-slate-500 mt-1">Calculate the future costs of college and school.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Education</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Forecast premium schooling and university capital demands.</p>
                 </div>
             </a>
 
-            <a href="emi.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-teal-500 flex items-start space-x-4">
-                <div class="p-3 bg-teal-50 text-teal-600 rounded-xl">
-                    <i class="fa-solid fa-percent text-2xl w-8 text-center"></i>
+            <!-- 8. EMI -->
+            <a href="emi.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-percent text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">EMI</h2>
-                    <p class="text-sm text-slate-500 mt-1">Calculate monthly loan installments quickly.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">EMI</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Calculate monthly repayment profiles with absolute clarity.</p>
                 </div>
             </a>
 
-            <a href="compound-interest.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-violet-500 flex items-start space-x-4">
-                <div class="p-3 bg-violet-50 text-violet-600 rounded-xl">
-                    <i class="fa-solid fa-chart-line text-2xl w-8 text-center"></i>
+            <!-- 9. Compound Interest -->
+            <a href="compound-interest.html" class="gold-card p-6 rounded-xl flex items-start space-x-4">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-chart-line text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Compound Interest</h2>
-                    <p class="text-sm text-slate-500 mt-1">See the power of compounding on your savings.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Compound Interest</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Witness the compounding effect on long-term capital.</p>
                 </div>
             </a>
 
-            <a href="inflation.html" class="calc-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-orange-500 flex items-start space-x-4 sm:col-span-2 lg:col-span-1">
-                <div class="p-3 bg-orange-50 text-orange-600 rounded-xl">
-                    <i class="fa-solid fa-cloud-arrow-up text-2xl w-8 text-center"></i>
+            <!-- 10. Inflation -->
+            <a href="inflation.html" class="gold-card p-6 rounded-xl flex items-start space-x-4 sm:col-span-2 lg:col-span-1">
+                <div class="p-3 bg-amber-500/10 gold-text rounded-lg border border-amber-500/20">
+                    <i class="fa-solid fa-cloud-arrow-up text-xl w-6 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Inflation</h2>
-                    <p class="text-sm text-slate-500 mt-1">Determine the future buying power of your cash.</p>
+                    <h2 class="text-base font-medium tracking-wide text-white">Inflation</h2>
+                    <p class="text-xs text-slate-400 mt-1 font-light leading-relaxed">Track the purchasing power of capital across generations.</p>
                 </div>
             </a>
 
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-        <p>&copy; 2026 Investment Calculators Hub. Built for mobile and desktop.</p>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/40 py-6 text-center text-xs text-slate-500 tracking-wider">
+        <p>&copy; 2026 Investment Calculators Hub. Designed for Sophisticated Planning.</p>
     </footer>
 
 </body>
