@@ -10,150 +10,147 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-    <!-- Font Awesome for clean, sharp icons -->
+    <!-- Font Awesome for clean, vibrant financial icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body {
             font-family: 'DM Sans', sans-serif;
-            background-color: #ffffff; /* Pure White Background */
+            background-color: #f8fafc; /* Clean, modern slate background */
         }
-        /* Custom minimalist light-theme hover & transitions */
-        .mono-card {
-            background-color: #ffffff; 
-            border: 1px solid #e5e5e5; /* Soft light-grey border */
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Custom responsive card transitions */
+        .color-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .mono-card:hover {
-            border-color: #000000; /* Sharp Black hover border */
+        .color-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
-<body class="text-neutral-800 min-h-screen flex flex-col justify-between">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
     <!-- Header Section -->
-    <header class="border-b border-neutral-100 py-12 px-4 text-center">
+    <header class="bg-white border-b border-slate-100 py-12 px-4 text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-light tracking-widest uppercase text-black">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
                 Calculators
             </h1>
-            <div class="w-12 h-[1px] bg-black mx-auto mt-4 opacity-80"></div>
+            <div class="w-12 h-[3px] bg-indigo-600 mx-auto mt-4 rounded-full"></div>
         </div>
     </header>
 
-    <!-- Main Content: Grid of Black & White Calculator Buttons -->
+    <!-- Main Content: Grid of Color-Coded Calculator Buttons -->
     <main class="flex-grow max-w-6xl w-full mx-auto px-6 py-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- 1. Lumpsum -->
-            <a href="lumpsum.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-money-bill-wave text-xl w-6 text-center"></i>
+            <!-- 1. Lumpsum (Emerald Green) -->
+            <a href="lumpsum.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-500 flex items-start space-x-4">
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100">
+                    <i class="fa-solid fa-money-bill-wave text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Lumpsum</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Calculate returns for one-time capital investments.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Lumpsum</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Calculate returns for one-time capital investments.</p>
                 </div>
             </a>
 
-            <!-- 2. Regular Income -->
-            <a href="regular-income.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-wallet text-xl w-6 text-center"></i>
+            <!-- 2. Regular Income (Teal) -->
+            <a href="regular-income.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-teal-500 flex items-start space-x-4">
+                <div class="p-3 bg-teal-50 text-teal-600 rounded-xl border border-teal-100">
+                    <i class="fa-solid fa-wallet text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Regular Income</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Estimate steady, recurring payouts from your wealth.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Regular Income</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Estimate steady, recurring payouts from your wealth.</p>
                 </div>
             </a>
 
-            <!-- 3. SIP Returns -->
-            <a href="sip.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-arrow-trend-up text-xl w-6 text-center"></i>
+            <!-- 3. SIP Returns (Indigo) -->
+            <a href="sip.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-indigo-500 flex items-start space-x-4">
+                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
+                    <i class="fa-solid fa-arrow-trend-up text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">SIP Returns</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Grow your assets with methodical monthly planning.</p>
+                    <h2 class="text-lg font-bold text-slate-900">SIP Returns</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Grow your assets with methodical monthly planning.</p>
                 </div>
             </a>
 
-            <!-- 4. SWP -->
-            <a href="swp.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-money-bill-transfer text-xl w-6 text-center"></i>
+            <!-- 4. SWP (Purple) -->
+            <a href="swp.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-purple-500 flex items-start space-x-4">
+                <div class="p-3 bg-purple-50 text-purple-600 rounded-xl border border-purple-100">
+                    <i class="fa-solid fa-money-bill-transfer text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">SWP</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Design systematic, tax-efficient capital withdrawal plans.</p>
+                    <h2 class="text-lg font-bold text-slate-900">SWP</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Design systematic, tax-efficient capital withdrawal plans.</p>
                 </div>
             </a>
 
-            <!-- 5. Goal Setting -->
-            <a href="goal-setting.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-bullseye text-xl w-6 text-center"></i>
+            <!-- 5. Goal Setting (Amber/Gold) -->
+            <a href="goal-setting.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-amber-500 flex items-start space-x-4">
+                <div class="p-3 bg-amber-50 text-amber-600 rounded-xl border border-amber-100">
+                    <i class="fa-solid fa-bullseye text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Goal Setting</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Align your savings target with future ambitions.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Goal Setting</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Align your savings target with future ambitions.</p>
                 </div>
             </a>
 
             <!-- 6. Retirement Fund -->
-            <a href="retirement.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-umbrella text-xl w-6 text-center"></i>
+            <a href="retirement.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-rose-500 flex items-start space-x-4">
+                <div class="p-3 bg-rose-50 text-rose-600 rounded-xl border border-rose-100">
+                    <i class="fa-solid fa-umbrella text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Retirement Fund</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Ensure dynamic security for your ultimate golden years.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Retirement Fund</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Ensure dynamic security for your ultimate golden years.</p>
                 </div>
             </a>
 
-            <!-- 7. Education -->
-            <a href="education.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-graduation-cap text-xl w-6 text-center"></i>
+            <!-- 7. Education (Sky Blue) -->
+            <a href="education.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-sky-500 flex items-start space-x-4">
+                <div class="p-3 bg-sky-50 text-sky-600 rounded-xl border border-sky-100">
+                    <i class="fa-solid fa-graduation-cap text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Education</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Forecast premium schooling and university capital demands.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Education</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Forecast premium schooling and university capital demands.</p>
                 </div>
             </a>
 
-            <!-- 8. EMI -->
-            <a href="emi.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-percent text-xl w-6 text-center"></i>
+            <!-- 8. EMI (Cyan/Blue-Green) -->
+            <a href="emi.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-cyan-500 flex items-start space-x-4">
+                <div class="p-3 bg-cyan-50 text-cyan-600 rounded-xl border border-cyan-100">
+                    <i class="fa-solid fa-percent text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">EMI</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Calculate monthly repayment profiles with absolute clarity.</p>
+                    <h2 class="text-lg font-bold text-slate-900">EMI</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Calculate monthly repayment profiles with absolute clarity.</p>
                 </div>
             </a>
 
-            <!-- 9. Compound Interest -->
-            <a href="compound-interest.html" class="mono-card p-6 rounded-lg flex items-start space-x-4">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-chart-line text-xl w-6 text-center"></i>
+            <!-- 9. Compound Interest (Violet) -->
+            <a href="compound-interest.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-violet-500 flex items-start space-x-4">
+                <div class="p-3 bg-violet-50 text-violet-600 rounded-xl border border-violet-100">
+                    <i class="fa-solid fa-chart-line text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Compound Interest</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Witness the compounding effect on long-term capital.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Compound Interest</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Witness the compounding effect on long-term capital.</p>
                 </div>
             </a>
 
-            <!-- 10. Inflation -->
-            <a href="inflation.html" class="mono-card p-6 rounded-lg flex items-start space-x-4 sm:col-span-2 lg:col-span-1">
-                <div class="p-3 bg-neutral-50 text-black rounded border border-neutral-200">
-                    <i class="fa-solid fa-cloud-arrow-up text-xl w-6 text-center"></i>
+            <!-- 10. Inflation (Orange) -->
+            <a href="inflation.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-orange-500 flex items-start space-x-4 sm:col-span-2 lg:col-span-1">
+                <div class="p-3 bg-orange-50 text-orange-600 rounded-xl border border-orange-100">
+                    <i class="fa-solid fa-cloud-arrow-up text-2xl w-8 text-center"></i>
                 </div>
                 <div>
-                    <h2 class="text-base font-medium tracking-wide text-black">Inflation</h2>
-                    <p class="text-xs text-neutral-500 mt-1 font-light leading-relaxed">Track the purchasing power of capital across generations.</p>
+                    <h2 class="text-lg font-bold text-slate-900">Inflation</h2>
+                    <p class="text-sm text-slate-500 mt-1 leading-relaxed">Track the purchasing power of capital across generations.</p>
                 </div>
             </a>
 
@@ -161,8 +158,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-neutral-100 py-6 text-center text-xs text-neutral-400 tracking-wider">
-        <p>&copy; 2026 Investment Calculators Hub. Minimalist Engineering.</p>
+    <footer class="bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400 font-medium tracking-wide">
+        <p>&copy; 2026 Investment Calculators Hub. Engineered for clarity.</p>
     </footer>
 
 </body>
