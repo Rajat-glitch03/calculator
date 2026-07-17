@@ -294,61 +294,57 @@
             const years = parseInt(timeInput.value) || 0;
             const waitingYears = parseInt(waitingInput.value) || 0;
             const annualStepUpRate = parseFloat(stepupInput.value) || 0;
-
+        
             const monthlyRate = (annualRate / 100) / 12;
             
             let labelsArray = [];
-            let cumulativeWithdrawalsData = [];
             let balancesData = [];
-
+        
             let runningBalance = initialPrincipal;
             let totalWithdrawalPayout = 0;
-
-            // Phase 1: Waiting Period Deferment (Only compounding growth occurs, no payouts yet)
+        
+            // Phase 1: Wait Period Deferment (Compounds monthly without withdrawals)
             const waitingMonths = waitingYears * 12;
             for (let wm = 1; wm <= waitingMonths; wm++) {
                 runningBalance = runningBalance * (1 + monthlyRate);
             }
-
+        
             // Phase 2: Active SWP Payout Loop Timeline
             const totalWithdrawalMonths = years * 12;
             
             for (let month = 1; month <= totalWithdrawalMonths; month++) {
-                // Apply dynamic annual step-up to the payout amount at the start of subsequent years
+                // Apply annual withdrawal step-up at the start of subsequent years
                 if (month > 1 && (month - 1) % 12 === 0 && annualStepUpRate > 0) {
                     currentMonthlyWithdrawal = currentMonthlyWithdrawal * (1 + (annualStepUpRate / 100));
                 }
-
+        
                 if (runningBalance > 0) {
-                    // Monthly growth compounding
-                    runningBalance = runningBalance * (1 + monthlyRate);
-                    
-                    // Month-end payout deduction
+                    // 1. Deduct withdrawal at the BEGINNING of the month
                     const actualWithdrawal = Math.min(runningBalance, currentMonthlyWithdrawal);
                     runningBalance -= actualWithdrawal;
                     totalWithdrawalPayout += actualWithdrawal;
+        
+                    // 2. Compound the remaining balance at the END of the month
+                    runningBalance = runningBalance * (1 + monthlyRate);
                 } else {
                     runningBalance = 0;
                 }
-
-                // Collect metric checkpoints annually for the dynamic chart mapping
+        
+                // Collect annual metric checkpoints for chart mapping
                 if (month % 12 === 0) {
-                    const currentYear = month / 12;
-                    labelsArray.push('Yr ' + currentYear);
-                    cumulativeWithdrawalsData.push(Math.round(totalWithdrawalPayout));
+                    labelsArray.push('Yr ' + (month / 12));
                     balancesData.push(Math.round(runningBalance));
                 }
             }
-
+        
             // DOM Visual Elements Sync Insertion
             displayInvested.innerText = formatINR(initialPrincipal);
             displayWithdrawal.innerText = formatINR(totalWithdrawalPayout);
             displayTotal.innerText = formatINR(runningBalance);
-
-            // Update Dynamic Graph Dataset Multi-Bars
+        
+            // Update Graph Data
             swpChart.data.labels = labelsArray;
-            swpChart.data.datasets[0].data = cumulativeWithdrawalsData;
-            swpChart.data.datasets[1].data = balancesData;
+            swpChart.data.datasets[0].data = balancesData;
             swpChart.update();
         }
 
