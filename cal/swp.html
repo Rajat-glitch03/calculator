@@ -1,1 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWP Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Style input range sliders nicely */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <a href="../index.html" class="text-slate-500 hover:text-slate-900 transition mb-6 inline-flex items-center gap-2 text-sm font-medium">
+            <i class="fa-solid fa-arrow-left"></i> Back to Calculators
+        </a>
+
+        <div class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+                SWP
+            </h1>
+            <div class="w-12 h-[3px] bg-blue-600 mt-3 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[420px] order-1 lg:order-2">
+                
+                <!-- Fixed Stats Header: Changed to grid-cols-1 sm:grid-cols-3 and added responsive borders and gaps -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 border-b border-slate-100 pb-5 mb-5 text-center">
+                    <div class="px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Total Investment</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-slate-800 break-all" id="displayInvested">₹0</span>
+                    </div>
+                    <div class="border-y border-slate-100 sm:border-y-0 sm:border-x py-2 sm:py-0 px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Total Withdrawal</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-emerald-600 break-all" id="displayWithdrawal">₹0</span>
+                    </div>
+                    <div class="px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Final Balance</span>
+                        <span class="text-sm sm:text-base md:text-lg font-extrabold text-blue-600 break-all" id="displayTotal">₹0</span>
+                    </div>
+                </div>
+
+                <div class="w-full flex-grow relative min-h-[250px] max-h-[280px] flex items-center justify-center">
+                    <canvas id="swpChart"></canvas>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 mt-6 w-full border-t border-slate-100 pt-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded bg-[#f59e0b]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Total Withdrawal</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded bg-[#39e75f]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Final Balance</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 order-2 lg:order-1">
+                
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Total Investment</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                            <span class="text-slate-400 mr-1 text-sm">₹</span>
+                            <input type="number" id="totalInvestmentInput" value="500000" min="1000" max="100000000" step="1000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="totalInvestmentSlider" min="1000" max="100000000" step="1000" value="500000">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>₹1K</span>
+                        <span>₹10Cr</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Withdrawal Per Month</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                            <span class="text-slate-400 mr-1 text-sm">₹</span>
+                            <input type="number" id="withdrawalInput" value="5000" min="100" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="withdrawalSlider" min="100" max="1000000" step="500" value="5000">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>₹100</span>
+                        <span>₹10L</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
+                            <input type="number" id="rateInput" value="12" min="1" max="30" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rateSlider" min="1" max="30" step="0.5" value="12">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>1%</span>
+                        <span>30%</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Time Period</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                            <input type="number" id="timeInput" value="10" min="1" max="40" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yr</span>
+                        </div>
+                    </div>
+                    <input type="range" id="timeSlider" min="1" max="40" step="1" value="10">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>1 Yr</span>
+                        <span>40 Yr</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mt-12 bg-black/[0.03] backdrop-blur-sm p-6 rounded-2xl border border-slate-200/80">
+            <p class="text-xs text-black leading-relaxed font-semibold">
+                Returns shown are illustrative estimates based on assumed rate of return and are not guaranteed.<br class="hidden md:block">
+                Mutual Fund investments are subject to market risk; read all scheme related documents carefully before investing.
+            </p>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-400 font-medium tracking-wide bg-white mt-12">
+        <p>&copy; 2026 Investment Calculators Hub.</p>
+    </footer>
+
+    <script>
+        // Core Control DOM Elements
+        const totalInvestmentSlider = document.getElementById('totalInvestmentSlider');
+        const totalInvestmentInput = document.getElementById('totalInvestmentInput');
+        const withdrawalSlider = document.getElementById('withdrawalSlider');
+        const withdrawalInput = document.getElementById('withdrawalInput');
+        const rateSlider = document.getElementById('rateSlider');
+        const rateInput = document.getElementById('rateInput');
+        const timeSlider = document.getElementById('timeSlider');
+        const timeInput = document.getElementById('timeInput');
+
+        const displayInvested = document.getElementById('displayInvested');
+        const displayWithdrawal = document.getElementById('displayWithdrawal');
+        const displayTotal = document.getElementById('displayTotal');
+
+        // Formatter using Indian Standard Currency Format (INR)
+        const formatINR = (value) => {
+            return '₹' + Math.round(value).toLocaleString('en-IN');
+        };
+
+        // Chart Initialization (Stacked Bar Chart across dynamic Year timeline)
+        const ctx = document.getElementById('swpChart').getContext('2d');
+        let swpChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Total Withdrawal',
+                        data: [],
+                        backgroundColor: '#f59e0b',
+                        borderWidth: 0,
+                        borderRadius: { topLeft: 0, topRight: 0, bottomLeft: 4, bottomRight: 4 }
+                    },
+                    {
+                        label: 'Final Balance',
+                        data: [],
+                        backgroundColor: '#39e75f',
+                        borderWidth: 0,
+                        borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 }
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false },
+                        ticks: { font: { family: 'DM Sans', size: 10 } }
+                    },
+                    y: {
+                        stacked: true,
+                        grid: { color: '#f1f5f9' },
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + (value >= 10000000 ? (value / 10000000).toFixed(1) + 'Cr' : value >= 100000 ? (value / 100000).toFixed(1) + 'L' : (value / 1000).toFixed(0) + 'K');
+                            },
+                            font: { family: 'DM Sans', size: 9 }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.dataset.label}: ${formatINR(context.raw)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Core Formula Logic Calculation for SWP
+        function calculateSWP() {
+            const initialInvestment = parseFloat(totalInvestmentInput.value) || 0;
+            const monthlyWithdrawal = parseFloat(withdrawalInput.value) || 0;
+            const annualRate = parseFloat(rateInput.value) || 0;
+            const years = parseInt(timeInput.value) || 0;
+
+            const r = (annualRate / 100) / 12; // Monthly periodic rate
+            const totalMonths = years * 12;
+
+            let labelsArray = [];
+            let withdrawalData = [];
+            let balanceData = [];
+
+            let currentBalance = initialInvestment;
+            let accumulatedWithdrawal = 0;
+
+            for (let month = 1; month <= totalMonths; month++) {
+                // Apply monthly appreciation compound interest first
+                currentBalance = currentBalance * (1 + r);
+                
+                // Deduct the withdrawal amount if balance allows it
+                if (currentBalance >= monthlyWithdrawal) {
+                    currentBalance -= monthlyWithdrawal;
+                    accumulatedWithdrawal += monthlyWithdrawal;
+                } else {
+                    accumulatedWithdrawal += currentBalance;
+                    currentBalance = 0;
+                }
+
+                // Compile dynamic data checkpoints annually
+                if (month % 12 === 0) {
+                    const currentYear = month / 12;
+                    labelsArray.push('Yr ' + currentYear);
+                    withdrawalData.push(Math.round(accumulatedWithdrawal));
+                    balanceData.push(Math.round(currentBalance));
+                }
+            }
+
+            // DOM Visual Elements Sync Insertion
+            displayInvested.innerText = formatINR(initialInvestment);
+            displayWithdrawal.innerText = formatINR(accumulatedWithdrawal);
+            displayTotal.innerText = formatINR(currentBalance);
+
+            // Update Dynamic Graph Dataset Multi-Bars
+            swpChart.data.labels = labelsArray;
+            swpChart.data.datasets[0].data = withdrawalData;
+            swpChart.data.datasets[1].data = balanceData;
+            swpChart.update();
+        }
+
+        // Control Sync Linkage
+        function syncControl(slider, input) {
+            slider.addEventListener('input', () => { input.value = slider.value; calculateSWP(); });
+            input.addEventListener('input', () => {
+                if(input.value === '') return;
+                let val = parseFloat(input.value);
+                if(val < parseFloat(input.min)) val = parseFloat(input.min);
+                if(val > parseFloat(input.max)) val = parseFloat(input.max);
+                slider.value = val;
+                calculateSWP();
+            });
+            input.addEventListener('blur', () => {
+                if(input.value === '' || parseFloat(input.value) < parseFloat(input.min)) input.value = input.min;
+                slider.value = input.value;
+                calculateSWP();
+            });
+        }
+
+        syncControl(totalInvestmentSlider, totalInvestmentInput);
+        syncControl(withdrawalSlider, withdrawalInput);
+        syncControl(rateSlider, rateInput);
+        syncControl(timeSlider, timeInput);
+
+        // Initial Calculation Trigger
+        calculateSWP();
+    </script>
+</body>
+</html>
