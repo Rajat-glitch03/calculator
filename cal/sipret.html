@@ -59,18 +59,19 @@
             
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[420px] order-1 lg:order-2">
                 
-                <div class="grid grid-cols-3 gap-1 border-b border-slate-100 pb-5 mb-5 text-center">
+                <!-- Fixed Stats Header: Changed to grid-cols-1 sm:grid-cols-3 and added responsive borders and gaps -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 border-b border-slate-100 pb-5 mb-5 text-center">
                     <div class="px-1">
                         <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Invested</span>
-                        <span class="text-xs sm:text-sm md:text-base font-bold text-slate-800" id="displayInvested">₹0</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-slate-800 break-all" id="displayInvested">₹0</span>
                     </div>
-                    <div class="border-x border-slate-100 px-1">
+                    <div class="border-y border-slate-100 sm:border-y-0 sm:border-x py-2 sm:py-0 px-1">
                         <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Est. Gains</span>
-                        <span class="text-xs sm:text-sm md:text-base font-bold text-emerald-600" id="displayGains">₹0</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-emerald-600 break-all" id="displayGains">₹0</span>
                     </div>
                     <div class="px-1">
                         <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Total Value</span>
-                        <span class="text-xs sm:text-sm md:text-base font-extrabold text-blue-600" id="displayTotal">₹0</span>
+                        <span class="text-sm sm:text-base md:text-lg font-extrabold text-blue-600 break-all" id="displayTotal">₹0</span>
                     </div>
                 </div>
 
