@@ -101,10 +101,10 @@
                         <label class="text-sm font-semibold text-slate-600">Total Investment</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
                             <span class="text-slate-400 mr-1 text-sm">₹</span>
-                            <input type="number" id="investmentInput" value="500000" min="10000" max="100000000" step="5000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <input type="number" id="investmentInput" value="1000000" min="10000" max="100000000" step="10000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                         </div>
                     </div>
-                    <input type="range" id="investmentSlider" min="10000" max="100000000" step="5000" value="500000">
+                    <input type="range" id="investmentSlider" min="10000" max="100000000" step="10000" value="1000000">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
                         <span>₹10K</span>
                         <span>₹10Cr</span>
@@ -117,10 +117,10 @@
                         <label class="text-sm font-semibold text-slate-600">Withdrawal Per Month</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
                             <span class="text-slate-400 mr-1 text-sm">₹</span>
-                            <input type="number" id="withdrawalInput" value="30000" min="500" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <input type="number" id="withdrawalInput" value="6500" min="500" max="1000000" step="500" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                         </div>
                     </div>
-                    <input type="range" id="withdrawalSlider" min="500" max="1000000" step="500" value="30000">
+                    <input type="range" id="withdrawalSlider" min="500" max="1000000" step="500" value="6500">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
                         <span>₹500</span>
                         <span>₹10L</span>
@@ -130,7 +130,7 @@
                 <!-- 3. Expected Return Rate -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                        <label class="text-sm font-semibold text-slate-600">Expected Returns (p.a)</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
                             <input type="number" id="rateInput" value="12" min="1" max="30" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                             <span class="text-slate-400 ml-1 text-sm">%</span>
@@ -146,47 +146,47 @@
                 <!-- 4. Withdrawal Duration -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Withdrawal Duration</label>
+                        <label class="text-sm font-semibold text-slate-600">How long you want to withdraw</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
                             <input type="number" id="timeInput" value="10" min="1" max="40" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
-                            <span class="text-slate-400 ml-1 text-sm">Yr</span>
+                            <span class="text-slate-400 ml-1 text-sm">Yrs</span>
                         </div>
                     </div>
                     <input type="range" id="timeSlider" min="1" max="40" step="1" value="10">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
                         <span>1 Yr</span>
-                        <span>40 Yr</span>
+                        <span>40 Yrs</span>
                     </div>
                 </div>
 
                 <!-- 5. Waiting Period Before Withdrawal -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Waiting Period</label>
+                        <label class="text-sm font-semibold text-slate-600">Waiting Period Before Withdrawal</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
-                            <input type="number" id="waitingInput" value="0" min="0" max="120" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
-                            <span class="text-slate-400 ml-1 text-sm">Months</span>
+                            <input type="number" id="waitingInput" value="0" min="0" max="20" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yrs</span>
                         </div>
                     </div>
-                    <input type="range" id="waitingSlider" min="0" max="120" step="1" value="0">
+                    <input type="range" id="waitingSlider" min="0" max="20" step="1" value="0">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>0 Mo</span>
-                        <span>120 Mo (10 Yrs)</span>
+                        <span>0 Yrs</span>
+                        <span>20 Yrs</span>
                     </div>
                 </div>
 
                 <!-- 6. Withdrawal Increase Rate (Annual Step-up) -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Annual Withdrawal Increase Rate</label>
+                        <label class="text-sm font-semibold text-slate-600">Withdrawal Increase Rate (Annual)</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
-                            <input type="number" id="stepupInput" value="0" min="0" max="20" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <input type="number" id="stepupInput" value="5" min="0" max="20" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                             <span class="text-slate-400 ml-1 text-sm">%</span>
                         </div>
                     </div>
-                    <input type="range" id="stepupSlider" min="0" max="20" step="0.5" value="0">
+                    <input type="range" id="stepupSlider" min="0" max="20" step="0.5" value="5">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>0% (Fixed)</span>
+                        <span>0%</span>
                         <span>20%</span>
                     </div>
                 </div>
@@ -197,8 +197,7 @@
 
         <div class="mt-12 bg-black/[0.03] backdrop-blur-sm p-6 rounded-2xl border border-slate-200/80">
             <p class="text-xs text-black leading-relaxed font-semibold">
-                Returns shown are illustrative estimates based on assumed rate of return and are not guaranteed.<br class="hidden md:block">
-                Mutual Fund investments are subject to market risk; read all scheme related documents carefully before investing.
+                Calculators are for illustrations only and do not represent actual returns. Mutual Fund investments are subject to market risks; read all scheme-related documents carefully[cite: 3].
             </p>
         </div>
     </main>
@@ -293,7 +292,7 @@
             let currentMonthlyWithdrawal = parseFloat(withdrawalInput.value) || 0;
             const annualRate = parseFloat(rateInput.value) || 0;
             const years = parseInt(timeInput.value) || 0;
-            const waitingMonths = parseInt(waitingInput.value) || 0;
+            const waitingYears = parseInt(waitingInput.value) || 0;
             const annualStepUpRate = parseFloat(stepupInput.value) || 0;
 
             const monthlyRate = (annualRate / 100) / 12;
@@ -305,7 +304,8 @@
             let runningBalance = initialPrincipal;
             let totalWithdrawalPayout = 0;
 
-            // Phase 1: Wait Period Deferment (Only Compounding returns grow, no payouts)
+            // Phase 1: Waiting Period Deferment (Only compounding growth occurs, no payouts yet)
+            const waitingMonths = waitingYears * 12;
             for (let wm = 1; wm <= waitingMonths; wm++) {
                 runningBalance = runningBalance * (1 + monthlyRate);
             }
@@ -319,11 +319,11 @@
                     currentMonthlyWithdrawal = currentMonthlyWithdrawal * (1 + (annualStepUpRate / 100));
                 }
 
-                // If balance is present, calculate month-end values
                 if (runningBalance > 0) {
-                    // Compound first, then deduct withdrawal at end of month
+                    // Monthly growth compounding
                     runningBalance = runningBalance * (1 + monthlyRate);
                     
+                    // Month-end payout deduction
                     const actualWithdrawal = Math.min(runningBalance, currentMonthlyWithdrawal);
                     runningBalance -= actualWithdrawal;
                     totalWithdrawalPayout += actualWithdrawal;
@@ -331,7 +331,7 @@
                     runningBalance = 0;
                 }
 
-                // Collect metric markers at the boundary of every year for charting checks
+                // Collect metric checkpoints annually for the dynamic chart mapping
                 if (month % 12 === 0) {
                     const currentYear = month / 12;
                     labelsArray.push('Yr ' + currentYear);
