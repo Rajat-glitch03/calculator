@@ -29,7 +29,7 @@
             appearance: none;
             width: 18px;
             height: 18px;
-            background: #2563eb;
+            background: #f59e0b;
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.1s ease;
@@ -51,7 +51,7 @@
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
                 Retirement Fund Calculator
             </h1>
-            <div class="w-12 h-[3px] bg-blue-600 mt-3 rounded-full"></div>
+            <div class="w-12 h-[3px] bg-[#f59e0b] mt-3 rounded-full"></div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -65,12 +65,12 @@
                         <span class="text-sm sm:text-base md:text-lg font-bold text-slate-800 break-all" id="displayRequired">₹0</span>
                     </div>
                     <div class="border-y border-slate-100 sm:border-y-0 sm:border-x py-2 sm:py-0 px-1">
-                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Fund Shortfall</span>
-                        <span class="text-sm sm:text-base md:text-lg font-bold text-rose-600 break-all" id="displayShortfall">₹0</span>
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Savings FV</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-emerald-600 break-all" id="displayFV">₹0</span>
                     </div>
                     <div class="px-1">
-                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Suggested Monthly SIP</span>
-                        <span class="text-sm sm:text-base md:text-lg font-extrabold text-blue-600 break-all" id="displaySip">₹0</span>
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Required Monthly SIP</span>
+                        <span class="text-sm sm:text-base md:text-lg font-extrabold text-amber-500 break-all" id="displaySip">₹0</span>
                     </div>
                 </div>
 
@@ -81,12 +81,12 @@
 
                 <div class="flex flex-wrap justify-center gap-6 mt-6 w-full border-t border-slate-100 pt-4">
                     <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded bg-[#10b981]"></div>
+                        <div class="w-3 h-3 rounded bg-[#39e75f]"></div>
                         <span class="text-xs font-semibold text-slate-600">Savings Future Value</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded bg-[#2563eb]"></div>
-                        <span class="text-xs font-semibold text-slate-600">Shortfall to Bridge</span>
+                        <div class="w-3 h-3 rounded bg-[#f59e0b]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Net Shortfall (SIP Target)</span>
                     </div>
                 </div>
             </div>
@@ -100,12 +100,12 @@
                         <label class="text-sm font-semibold text-slate-600">Current Monthly Expenses</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
                             <span class="text-slate-400 mr-1 text-sm">₹</span>
-                            <input type="number" id="expensesInput" value="50000" min="2000" max="1000000" step="1000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <input type="number" id="expensesInput" value="50000" min="0" max="1000000" step="1000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                         </div>
                     </div>
-                    <input type="range" id="expensesSlider" min="2000" max="1000000" step="1000" value="50000">
+                    <input type="range" id="expensesSlider" min="0" max="1000000" step="1000" value="50000">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                        <span>₹2K</span>
+                        <span>₹0</span>
                         <span>₹10L</span>
                     </div>
                 </div>
@@ -116,11 +116,11 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-xs font-semibold text-slate-600">Current Age</label>
                             <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-1.5 py-0.5 max-w-[70px]">
-                                <input type="number" id="currentAgeInput" value="25" min="15" max="60" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
+                                <input type="number" id="currentAgeInput" value="25" min="0" max="60" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
                                 <span class="text-slate-400 ml-0.5 text-xs">Yr</span>
                             </div>
                         </div>
-                        <input type="range" id="currentAgeSlider" min="15" max="60" step="1" value="25">
+                        <input type="range" id="currentAgeSlider" min="0" max="60" step="1" value="25">
                     </div>
 
                     <div>
@@ -173,22 +173,22 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-xs font-semibold text-slate-600">Expected ROI (p.a)</label>
                             <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-1.5 py-0.5 max-w-[70px]">
-                                <input type="number" id="rateInput" value="12" min="1" max="25" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
+                                <input type="number" id="rateInput" value="12" min="0" max="25" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
                                 <span class="text-slate-400 ml-0.5 text-xs">%</span>
                             </div>
                         </div>
-                        <input type="range" id="rateSlider" min="1" max="25" step="0.5" value="12">
+                        <input type="range" id="rateSlider" min="0" max="25" step="0.5" value="12">
                     </div>
 
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-xs font-semibold text-slate-600">Inflation Rate (p.a)</label>
                             <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-1.5 py-0.5 max-w-[70px]">
-                                <input type="number" id="inflationInput" value="6" min="1" max="15" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
+                                <input type="number" id="inflationInput" value="6" min="0" max="15" step="0.5" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-xs">
                                 <span class="text-slate-400 ml-0.5 text-xs">%</span>
                             </div>
                         </div>
-                        <input type="range" id="inflationSlider" min="1" max="15" step="0.5" value="6">
+                        <input type="range" id="inflationSlider" min="0" max="15" step="0.5" value="6">
                     </div>
                 </div>
 
@@ -208,7 +208,6 @@
     </footer>
 
     <script>
-        // DOM Form Selectors
         const expensesSlider = document.getElementById('expensesSlider');
         const expensesInput = document.getElementById('expensesInput');
         const currentAgeSlider = document.getElementById('currentAgeSlider');
@@ -225,12 +224,11 @@
         const inflationInput = document.getElementById('inflationInput');
 
         const displayRequired = document.getElementById('displayRequired');
-        const displayShortfall = document.getElementById('displayShortfall');
+        const displayFV = document.getElementById('displayFV');
         const displaySip = document.getElementById('displaySip');
 
         const formatINR = (value) => '₹' + Math.round(value).toLocaleString('en-IN');
 
-        // Clean Doughnut Chart Initialization
         const ctx = document.getElementById('retirementChart').getContext('2d');
         let retirementChart = new Chart(ctx, {
             type: 'doughnut',
@@ -238,7 +236,7 @@
                 labels: ['Savings Future Value', 'Shortfall to Bridge'],
                 datasets: [{
                     data: [0, 0],
-                    backgroundColor: ['#10b981', '#2563eb'],
+                    backgroundColor: ['#39e75f', '#f59e0b'],
                     borderWidth: 0
                 }]
             },
@@ -259,17 +257,15 @@
             }
         });
 
-        // Exact, Validated Financial Logic
         function calculateRetirement() {
             const monthlyExpenses = parseFloat(expensesInput.value) || 0;
-            let currentAge = parseInt(currentAgeInput.value) || 25;
+            let currentAge = parseInt(currentAgeInput.value) || 0;
             let retirementAge = parseInt(retirementAgeInput.value) || 60;
             let lifeExpectancy = parseInt(lifeExpectancyInput.value) || 85;
             const currentSavings = parseFloat(savingsInput.value) || 0;
             const roi = parseFloat(rateInput.value) || 0;
             const inflation = parseFloat(inflationInput.value) || 0;
 
-            // Integrity Checks
             if (retirementAge <= currentAge) {
                 retirementAge = currentAge + 1;
                 retirementAgeInput.value = retirementAge;
@@ -281,51 +277,55 @@
                 lifeExpectancySlider.value = lifeExpectancy;
             }
 
-            const yearsToRetire = retirementAge - currentAge;
-            const yearsInRetirement = lifeExpectancy - retirementAge;
+            const n_accumulation_years = retirementAge - currentAge;
+            const n_distribution_years = lifeExpectancy - retirementAge;
+            const total_months_to_retire = n_accumulation_years * 12;
 
-            // 1. Inflated Monthly Expense at the exact year of retirement
-            const inflatedExpensesMonthly = monthlyExpenses * Math.pow(1 + (inflation / 100), yearsToRetire);
+            // Standard Industry Math: Simple monthly rate breakdowns
+            const r_monthly = (roi / 100) / 12;
+            const inf_monthly = (inflation / 100) / 12;
 
-            // 2. Real Rate of Return (compounding framework for post-retirement safety)
-            const realRate = ((1 + (roi / 100)) / (1 + (inflation / 100))) - 1;
-            const monthlyRealRate = Math.pow(1 + realRate, 1 / 12) - 1;
-            const totalMonthsRetirement = yearsInRetirement * 12;
+            // 1. Inflated expenses at time of retirement (Annual compounding standard)
+            const inflatedExpensesMonthly = monthlyExpenses * Math.pow(1 + (inflation / 100), n_accumulation_years);
+
+            // 2. Standard Industry Post-Retirement Net Rate (Fisher equation alternative for apps)
+            const postRetirementMonthlyRate = (r_monthly - inf_monthly) / (1 + inf_monthly);
+            const totalMonthsRetirement = n_distribution_years * 12;
 
             // 3. Target Corpus Needed (Annuity due method)
             let targetCorpus = 0;
-            if (monthlyRealRate > 0) {
-                targetCorpus = inflatedExpensesMonthly * ((1 - Math.pow(1 + monthlyRealRate, -totalMonthsRetirement)) / monthlyRealRate) * (1 + monthlyRealRate);
+            if (postRetirementMonthlyRate !== 0) {
+                targetCorpus = inflatedExpensesMonthly * ((1 - Math.pow(1 + postRetirementMonthlyRate, -totalMonthsRetirement)) / postRetirementMonthlyRate) * (1 + postRetirementMonthlyRate);
             } else {
                 targetCorpus = inflatedExpensesMonthly * totalMonthsRetirement;
             }
 
-            // 4. Future Value of Existing Savings portfolio
-            const fvSavings = currentSavings * Math.pow(1 + (roi / 100), yearsToRetire);
+            // 4. Future Value of Savings (Annual compounding standard)
+            const fvSavings = currentSavings * Math.pow(1 + (roi / 100), n_accumulation_years);
 
             // 5. Shortfall gap calculation
             const shortfall = Math.max(0, targetCorpus - fvSavings);
 
-            // 6. Monthly SIP required to cover the shortfall gap
+            // 6. Standard Regular SIP accumulation formula (Annuity Due)
             let monthlySip = 0;
-            const monthlyRoi = Math.pow(1 + (roi / 100), 1 / 12) - 1;
-            const totalMonthsToRetire = yearsToRetire * 12;
-
-            if (shortfall > 0 && totalMonthsToRetire > 0) {
-                monthlySip = shortfall * monthlyRoi / ((Math.pow(1 + monthlyRoi, totalMonthsToRetire) - 1) * (1 + monthlyRoi));
+            if (shortfall > 0 && total_months_to_retire > 0) {
+                if (r_monthly !== 0) {
+                    monthlySip = shortfall * r_monthly / ((Math.pow(1 + r_monthly, total_months_to_retire) - 1) * (1 + r_monthly));
+                } else {
+                    monthlySip = shortfall / total_months_to_retire;
+                }
             }
 
-            // Update UI Outputs
+            // Sync text elements
             displayRequired.innerText = formatINR(targetCorpus);
-            displayShortfall.innerText = formatINR(shortfall);
+            displayFV.innerText = formatINR(fvSavings);
             displaySip.innerText = formatINR(monthlySip);
 
-            // Update Chart Elements
+            // Sync chart data
             retirementChart.data.datasets[0].data = [Math.round(Math.min(targetCorpus, fvSavings)), Math.round(shortfall)];
             retirementChart.update();
         }
 
-        // Standard Control Synchronizer Layout
         function syncControl(slider, input) {
             slider.addEventListener('input', () => { input.value = slider.value; calculateRetirement(); });
             input.addEventListener('input', () => {
@@ -351,7 +351,6 @@
         syncControl(rateSlider, rateInput);
         syncControl(inflationSlider, inflationInput);
 
-        // Bootstrap Initial Calculation Run
         calculateRetirement();
     </script>
 </body>
