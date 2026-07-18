@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement Fund Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <a href="../index.html" class="text-slate-500 hover:text-slate-900 transition mb-6 inline-flex items-center gap-2 text-sm font-medium">
+            <i class="fa-solid fa-arrow-left"></i> Back to Calculators
+        </a>
+
+        <div class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+                Retirement Fund
+            </h1>
+            <div class="w-12 h-[3px] bg-blue-600 mt-3 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- Output Display Card Container -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[480px] order-1 lg:order-2">
+                
+                <div class="space-y-3 border-b border-slate-100 pb-5 mb-3">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500 font-medium">Retirement amount required as per current expenses</span>
+                        <span class="font-bold text-slate-900 ml-2 text-right" id="displayRequired">₹0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500 font-medium">Additional Savings Required</span>
+                        <span class="font-bold text-slate-900 ml-2 text-right" id="displayAdditional">₹0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm pt-1 border-t border-slate-50">
+                        <span class="text-slate-600 font-bold">Achievable by a monthly SIP of</span>
+                        <span class="font-extrabold text-indigo-600 ml-2 text-right" id="displaySip">₹0</span>
+                    </div>
+                </div>
+
+                <!-- Doughnut Chart Canvas Workspace Container -->
+                <div class="w-full flex-grow relative min-h-[240px] max-h-[260px] flex items-center justify-center">
+                    <canvas id="retirementChart"></canvas>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-4">
+                        <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Required</span>
+                        <span class="text-lg md:text-xl font-black text-slate-800 tracking-tight" id="chartCenterText">₹0</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-4 w-full border-t border-slate-100 pt-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-3 rounded bg-[#39e75f]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Current Savings Value on Retirement</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-3 rounded bg-[#2563eb]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Additional Savings Required</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Controls Card Container -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 order-2 lg:order-1">
+                
+                <!-- 1. Current Monthly Expenses -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Current Monthly Expenses</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                            <span class="text-slate-400 mr-1 text-sm">₹</span>
+                            <input type="number" id="expensesInput" value="50000" min="2000" max="1000000" step="1000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="expensesSlider" min="2000" max="1000000" step="1000" value="50000">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>₹2K</span>
+                        <span>₹10L</span>
+                    </div>
+                </div>
+
+                <!-- 2. Current Age -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Current Age</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                            <input type="number" id="currentAgeInput" value="25" min="18" max="65" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yrs</span>
+                        </div>
+                    </div>
+                    <input type="range" id="currentAgeSlider" min="18" max="65" step="1" value="25">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>18 Yrs</span>
+                        <span>65 Yrs</span>
+                    </div>
+                </div>
+
+                <!-- 3. Expected Retirement Age -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Expected Retirement Age</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                            <input type="number" id="retirementAgeInput" value="60" min="40" max="75" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yrs</span>
+                        </div>
+                    </div>
+                    <input type="range" id="retirementAgeSlider" min="40" max="75" step="1" value="60">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>40 Yrs</span>
+                        <span>75 Yrs</span>
+                    </div>
+                </div>
+
+                <!-- 4. Life Expectancy -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Life Expectancy</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
+                            <input type="number" id="lifeExpectancyInput" value="100" min="60" max="110" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">Yrs</span>
+                        </div>
+                    </div>
+                    <input type="range" id="lifeExpectancySlider" min="60" max="110" step="1" value="100">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>60 Yrs</span>
+                        <span>110 Yrs</span>
+                    </div>
+                </div>
+
+                <!-- 5. Current Savings -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Current Savings</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[140px]">
+                            <span class="text-slate-400 mr-1 text-sm">₹</span>
+                            <input type="number" id="savingsInput" value="500000" min="0" max="100000000" step="25000" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                        </div>
+                    </div>
+                    <input type="range" id="savingsSlider" min="0" max="100000000" step="25000" value="500000">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>₹0</span>
+                        <span>₹10Cr</span>
+                    </div>
+                </div>
+
+                <!-- 6. Inflation Rate -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Inflation Rate</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
+                            <input type="number" id="inflationInput" value="6.00" min="1" max="15" step="0.25" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="inflationSlider" min="1" max="15" step="0.25" value="6.00">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>1%</span>
+                        <span>15%</span>
+                    </div>
+                </div>
+
+                <!-- 7. Expected Return Rate -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate</label>
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
+                            <input type="number" id="rateInput" value="12.00" min="4" max="25" step="0.25" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <span class="text-slate-400 ml-1 text-sm">%</span>
+                        </div>
+                    </div>
+                    <input type="range" id="rateSlider" min="4" max="25" step="0.25" value="12.00">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                        <span>4%</span>
+                        <span>25%</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mt-12 bg-black/[0.03] backdrop-blur-sm p-6 rounded-2xl border border-slate-200/80">
+            <p class="text-xs text-black leading-relaxed font-semibold">
+                Calculators are for illustrations only and do not represent actual returns. Mutual Fund investments are subject to market risks; read all scheme-related documents carefully[cite: 5].
+            </p>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-400 font-medium tracking-wide bg-white mt-12">
+        <p>&copy; 2026 Investment Calculators Hub.</p>
+    </footer>
+
+    <script>
+        // Core Control DOM Elements
+        const expensesSlider = document.getElementById('expensesSlider');
+        const expensesInput = document.getElementById('expensesInput');
+        const currentAgeSlider = document.getElementById('currentAgeSlider');
+        const currentAgeInput = document.getElementById('currentAgeInput');
+        const retirementAgeSlider = document.getElementById('retirementAgeSlider');
+        const retirementAgeInput = document.getElementById('retirementAgeInput');
+        const lifeExpectancySlider = document.getElementById('lifeExpectancySlider');
+        const lifeExpectancyInput = document.getElementById('lifeExpectancyInput');
+        const savingsSlider = document.getElementById('savingsSlider');
+        const savingsInput = document.getElementById('savingsInput');
+        const inflationSlider = document.getElementById('inflationSlider');
+        const inflationInput = document.getElementById('inflationInput');
+        const rateSlider = document.getElementById('rateSlider');
+        const rateInput = document.getElementById('rateInput');
+
+        const displayRequired = document.getElementById('displayRequired');
+        const displayAdditional = document.getElementById('displayAdditional');
+        const displaySip = document.getElementById('displaySip');
+        const chartCenterText = document.getElementById('chartCenterText');
+
+        // Formatter using Indian Compact Notation (Cr / L / K)
+        const formatCompactINR = (value) => {
+            const absVal = Math.abs(value);
+            if (absVal >= 10000000) {
+                return '₹' + (value / 10000000).toFixed(2) + 'Cr';
+            } else if (absVal >= 100000) {
+                return '₹' + (value / 100000).toFixed(2) + 'L';
+            } else if (absVal >= 1000) {
+                return '₹' + (value / 1000).toFixed(2) + 'K';
+            }
+            return '₹' + Math.round(value).toLocaleString('en-IN');
+        };
+
+        const formatFullINR = (value) => {
+            return '₹' + Math.round(value).toLocaleString('en-IN');
+        };
+
+        // Chart Initialization (Doughnut chart layout tracking corpus allocation breakdown)
+        const ctx = document.getElementById('retirementChart').getContext('2d');
+        let retirementChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Current Savings Value on Retirement', 'Additional Savings Required'],
+                datasets: [{
+                    data: [0, 0],
+                    backgroundColor: ['#39e75f', '#2563eb'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.label}: ${formatCompactINR(context.raw)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Core Mathematical Processing Logic for Retirement Calculation Framework
+        function calculateRetirement() {
+            const curExpenses = parseFloat(expensesInput.value) || 0;
+            const curAge = parseInt(currentAgeInput.value) || 25;
+            let retAge = parseInt(retirementAgeInput.value) || 60;
+            let lifeExp = parseInt(lifeExpectancyInput.value) || 100;
+            const curSavings = parseFloat(savingsInput.value) || 0;
+            const inflationRate = parseFloat(inflationInput.value) || 0;
+            const returnRate = parseFloat(rateInput.value) || 0;
+
+            // Enforce realistic bounds sanity checking parameters dynamically
+            if (retAge <= curAge) {
+                retAge = curAge + 1;
+                retirementAgeInput.value = retAge;
+                retirementAgeSlider.value = retAge;
+            }
+            if (lifeExp <= retAge) {
+                lifeExp = retAge + 1;
+                lifeExpectancyInput.value = lifeExp;
+                lifeExpectancySlider.value = lifeExp;
+            }
+
+            const accumulationYears = retAge - curAge;
+            const distributionYears = lifeExp - retAge;
+
+            const monthlyInflation = (inflationRate / 100) / 12;
+            const monthlyReturn = (returnRate / 100) / 12;
+
+            // 1. Calculate inflation-adjusted monthly expenses at retirement point
+            const totalAccumulationMonths = accumulationYears * 12;
+            const inflationAdjustedMonthlyExpense = curExpenses * Math.pow(1 + (inflationRate / 100), accumulationYears);
+
+            // 2. Compute exact required corpus at retirement age (Beginning-of-month distribution pattern model)
+            const totalDistributionMonths = distributionYears * 12;
+            let requiredCorpus = 0;
+            
+            // Post-retirement safe growth rate balancing index (typically returns match inflation or slightly higher)
+            // Real rate of return modeling applied across distribution timeline
+            const postRetireMonthlyReturn = monthlyInflation; // To sustain value matching target profile engine
+            
+            let runningExpenses = inflationAdjustedMonthlyExpense;
+            let tempCorpus = 0;
+            
+            // Reverse engineering distribution lifecycle mapping
+            for (let m = totalDistributionMonths; m >= 1; m--) {
+                tempCorpus = (tempCorpus + runningExpenses) / (1 + postRetireMonthlyReturn);
+            }
+            requiredCorpus = tempCorpus;
+
+            // 3. Compute Future Value of current capital assets already saved
+            const futureValueSavings = curSavings * Math.pow(1 + (returnRate / 100), accumulationYears);
+
+            // 4. Calculate additional required funding pool gap metrics
+            const additionalSavingsRequired = Math.max(0, requiredCorpus - futureValueSavings);
+
+            // 5. Compute required accumulation regular Monthly SIP layout metrics
+            let requiredMonthlySip = 0;
+            if (additionalSavingsRequired > 0 && totalAccumulationMonths > 0) {
+                requiredMonthlySip = additionalSavingsRequired * monthlyReturn / (Math.pow(1 + monthlyReturn, totalAccumulationMonths) - 1);
+            }
+
+            // Sync visual data interfaces into matching system tags
+            displayRequired.innerText = formatCompactINR(requiredCorpus);
+            displayAdditional.innerText = formatCompactINR(additionalSavingsRequired);
+            displaySip.innerText = formatCompactINR(requiredMonthlySip);
+            chartCenterText.innerText = formatCompactINR(requiredCorpus);
+
+            // Dynamically refresh allocation structure metrics on Chart component viewport
+            retirementChart.data.datasets[0].data = [
+                Math.round(Math.min(requiredCorpus, futureValueSavings)), 
+                Math.round(additionalSavingsRequired)
+            ];
+            retirementChart.update();
+        }
+
+        // Control Sync Linkage Pipeline Architecture Configuration
+        function syncControl(slider, input) {
+            slider.addEventListener('input', () => { input.value = slider.value; calculateRetirement(); });
+            input.addEventListener('input', () => {
+                if(input.value === '') return;
+                let val = parseFloat(input.value);
+                if(val < parseFloat(input.min)) val = parseFloat(input.min);
+                if(val > parseFloat(input.max)) val = parseFloat(input.max);
+                slider.value = val;
+                calculateRetirement();
+            });
+            input.addEventListener('blur', () => {
+                if(input.value === '' || parseFloat(input.value) < parseFloat(input.min)) input.value = input.min;
+                slider.value = input.value;
+                calculateRetirement();
+            });
+        }
+
+        syncControl(expensesSlider, expensesInput);
+        syncControl(currentAgeSlider, currentAgeInput);
+        syncControl(retirementAgeSlider, retirementAgeInput);
+        syncControl(lifeExpectancySlider, lifeExpectancyInput);
+        syncControl(savingsSlider, savingsInput);
+        syncControl(inflationSlider, inflationInput);
+        syncControl(rateSlider, rateInput);
+
+        // Initial Calculations Trigger Sequence
+        calculateRetirement();
+    </script>
+</body>
+</html>
