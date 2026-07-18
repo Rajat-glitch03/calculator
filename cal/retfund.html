@@ -15,7 +15,7 @@
             font-family: 'DM Sans', sans-serif;
             background-color: #f8fafc;
         }
-        /* Style input range sliders nicely from base template */
+        /* Sync input range sliders style directly from the base template */
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
@@ -57,51 +57,51 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             
-            <!-- Result Panel Display Area (Order-1 on Large Viewports) -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[480px] order-1 lg:order-2">
+            <!-- Result Output Section Display Panel -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[460px] order-1 lg:order-2">
                 
-                <!-- Financial Metrics Breakdown Headers matching Screenshot layout logic -->
-                <div class="space-y-4 border-b border-slate-100 pb-5 mb-3 text-left">
-                    <div class="flex justify-between items-center sm:items-baseline gap-2">
-                        <span class="text-xs sm:text-sm font-medium text-slate-600">Retirement amount required as per current expenses</span>
-                        <span class="text-sm sm:text-base md:text-lg font-bold text-slate-900 whitespace-nowrap" id="displayRequired">₹0</span>
+                <!-- Financial Summary Header Grid Element Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 border-b border-slate-100 pb-5 mb-5 text-center">
+                    <div class="px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Total Required</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-slate-800 break-all" id="displayRequired">₹0</span>
                     </div>
-                    <div class="flex justify-between items-center sm:items-baseline gap-2">
-                        <span class="text-xs sm:text-sm font-medium text-slate-600">Additional Savings Required</span>
-                        <span class="text-sm sm:text-base md:text-lg font-bold text-slate-900 whitespace-nowrap" id="displayAdditional">₹0</span>
+                    <div class="border-y border-slate-100 sm:border-y-0 sm:border-x py-2 sm:py-0 px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Deficit / Shortfall</span>
+                        <span class="text-sm sm:text-base md:text-lg font-bold text-rose-600 break-all" id="displayAdditional">₹0</span>
                     </div>
-                    <div class="flex justify-between items-center sm:items-baseline gap-2 pt-2 border-t border-slate-50">
-                        <span class="text-xs sm:text-sm font-bold text-slate-700">Achievable by a monthly SIP of</span>
-                        <span class="text-sm sm:text-base md:text-xl font-extrabold text-indigo-600 whitespace-nowrap" id="displaySip">₹0</span>
+                    <div class="px-1">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Suggested Monthly SIP</span>
+                        <span class="text-sm sm:text-base md:text-lg font-extrabold text-blue-600 break-all" id="displaySip">₹0</span>
                     </div>
                 </div>
 
-                <!-- Central Doughnut Chart Layer Canvas Context Wrapper -->
+                <!-- Central Visual Chart Representation Layer Canvas Wrapper -->
                 <div class="w-full flex-grow relative min-h-[250px] max-h-[280px] flex items-center justify-center">
                     <canvas id="retirementChart"></canvas>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-4">
-                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Required</span>
-                        <span class="text-base sm:text-lg font-black text-slate-800 tracking-tight" id="chartCenterText">₹0</span>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-2">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Target Corpus</span>
+                        <span class="text-sm sm:text-base font-black text-slate-700 tracking-tight" id="chartCenterText">₹0</span>
                     </div>
                 </div>
 
-                <!-- Custom Colored Chart Legend Grid Blocks matching requested combos -->
-                <div class="flex flex-col gap-2.5 mt-4 w-full border-t border-slate-100 pt-4">
+                <!-- Legend Layout aligned seamlessly with color tokens palette -->
+                <div class="flex flex-wrap justify-center gap-6 mt-6 w-full border-t border-slate-100 pt-4">
                     <div class="flex items-center space-x-2">
-                        <div class="w-3.5 h-3.5 rounded bg-[#39e75f]"></div>
-                        <span class="text-xs font-semibold text-slate-600">Current Savings Value on Retirement</span>
+                        <div class="w-3 h-3 rounded bg-[#39e75f]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Savings Future Value</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <div class="w-3.5 h-3.5 rounded bg-[#2563eb]"></div>
-                        <span class="text-xs font-semibold text-slate-600">Additional Savings Required</span>
+                        <div class="w-3 h-3 rounded bg-[#2563eb]"></div>
+                        <span class="text-xs font-semibold text-slate-600">Fund Deficit Remaining</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Input Controls Slider Group Elements Container (Order-2 on Large Viewports) -->
+            <!-- Configuration Input Form Slider Parameters -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 order-2 lg:order-1">
                 
-                <!-- Input Element 1: Current Monthly Expenses -->
+                <!-- Parameter 1: Current Monthly Expenses -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-semibold text-slate-600">Current Monthly Expenses</label>
@@ -117,7 +117,7 @@
                     </div>
                 </div>
 
-                <!-- Input Element 2: Current Age -->
+                <!-- Parameter 2: Current Age -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-semibold text-slate-600">Current Age</label>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <!-- Input Element 3: Expected Retirement Age -->
+                <!-- Parameter 3: Expected Retirement Age -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-semibold text-slate-600">Expected Retirement Age</label>
@@ -149,23 +149,23 @@
                     </div>
                 </div>
 
-                <!-- Input Element 4: Life Expectancy -->
+                <!-- Parameter 4: Life Expectancy -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-semibold text-slate-600">Life Expectancy</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[110px]">
-                            <input type="number" id="lifeExpectancyInput" value="100" min="60" max="110" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
+                            <input type="number" id="lifeExpectancyInput" value="85" min="60" max="110" step="1" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                             <span class="text-slate-400 ml-1 text-sm">Yrs</span>
                         </div>
                     </div>
-                    <input type="range" id="lifeExpectancySlider" min="60" max="110" step="1" value="100">
+                    <input type="range" id="lifeExpectancySlider" min="60" max="110" step="1" value="85">
                     <div class="flex justify-between text-[10px] text-slate-400 mt-1">
                         <span>60 Yrs</span>
                         <span>110 Yrs</span>
                     </div>
                 </div>
 
-                <!-- Input Element 5: Current Savings -->
+                <!-- Parameter 5: Current Accumulated Savings Portfolio -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-semibold text-slate-600">Current Savings</label>
@@ -181,10 +181,10 @@
                     </div>
                 </div>
 
-                <!-- Input Element 6: Inflation Rate -->
+                <!-- Parameter 6: Inflation Rate Strategy -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Inflation Rate</label>
+                        <label class="text-sm font-semibold text-slate-600">Inflation Rate (p.a)</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
                             <input type="number" id="inflationInput" value="6.00" min="1" max="15" step="0.25" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                             <span class="text-slate-400 ml-1 text-sm">%</span>
@@ -197,10 +197,10 @@
                     </div>
                 </div>
 
-                <!-- Input Element 7: Expected Return Rate -->
+                <!-- Parameter 7: Expected Return Yield (Investment Portfolio Yield) -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-semibold text-slate-600">Expected Return Rate</label>
+                        <label class="text-sm font-semibold text-slate-600">Expected Pre-Retirement Return (p.a)</label>
                         <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 max-w-[100px]">
                             <input type="number" id="rateInput" value="12.00" min="1" max="25" step="0.25" class="w-full bg-transparent outline-none text-right font-bold text-slate-900 text-sm">
                             <span class="text-slate-400 ml-1 text-sm">%</span>
@@ -217,10 +217,10 @@
 
         </div>
 
-        <!-- Footnote Legal Disclaimer matching the design template exactly -->
+        <!-- System Legal Disclaimer Footnotes Section -->
         <div class="mt-12 bg-black/[0.03] backdrop-blur-sm p-6 rounded-2xl border border-slate-200/80">
             <p class="text-xs text-black leading-relaxed font-semibold">
-                Calculators are for illustrations only and do not represent actual returns. Mutual Fund investments are subject to market risks; read all scheme-related documents carefully[cite: 6].
+                Calculations are illustrative estimates based on assumed inflation metrics and targeted returns. Actual values may change depending on market fluctuations. Mutual Fund investments are subject to market risks; read all scheme-related documents carefully.
             </p>
         </div>
     </main>
@@ -230,7 +230,7 @@
     </footer>
 
     <script>
-        // DOM Elements binding sequence
+        // DOM Interactive Elements Hookup
         const expensesSlider = document.getElementById('expensesSlider');
         const expensesInput = document.getElementById('expensesInput');
         const currentAgeSlider = document.getElementById('currentAgeSlider');
@@ -251,25 +251,17 @@
         const displaySip = document.getElementById('displaySip');
         const chartCenterText = document.getElementById('chartCenterText');
 
-        // Formatter using Indian Compact Notation system (Cr / L / K) matched to requirements
-        const formatCompactINR = (value) => {
-            const absVal = Math.abs(value);
-            if (absVal >= 10000000) {
-                return '₹' + (value / 10000000).toFixed(2) + 'Cr';
-            } else if (absVal >= 100000) {
-                return '₹' + (value / 100000).toFixed(2) + 'L';
-            } else if (absVal >= 1000) {
-                return '₹' + (value / 1000).toFixed(2) + 'K';
-            }
+        // Formatter utilizing Indian Currency System (INR Notation)
+        const formatINR = (value) => {
             return '₹' + Math.round(value).toLocaleString('en-IN');
         };
 
-        // Chart Initialization (Doughnut configurations matching screenshot values)
+        // Chart Initialization (Doughnut configurations matching specified styles layout)
         const ctx = document.getElementById('retirementChart').getContext('2d');
         let retirementChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Current Savings Value on Retirement', 'Additional Savings Required'],
+                labels: ['Savings Future Value', 'Fund Deficit Remaining'],
                 datasets: [{
                     data: [0, 0],
                     backgroundColor: ['#39e75f', '#2563eb'],
@@ -286,7 +278,7 @@
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return ` ${context.label}: ${formatCompactINR(context.raw)}`;
+                                return ` ${context.label}: ${formatINR(context.raw)}`;
                             }
                         }
                     }
@@ -294,17 +286,17 @@
             }
         });
 
-        // Core Mathematical Engine matching financial calculation standards
-        function calculateRetirementText() {
+        // Refactored Financial Calculus Engine Execution Block
+        function calculateRetirement() {
             const curExpenses = parseFloat(expensesInput.value) || 0;
             const curAge = parseInt(currentAgeInput.value) || 25;
             let retAge = parseInt(retirementAgeInput.value) || 60;
-            let lifeExp = parseInt(lifeExpectancyInput.value) || 100;
+            let lifeExp = parseInt(lifeExpectancyInput.value) || 85;
             const curSavings = parseFloat(savingsInput.value) || 0;
             const inflationRate = parseFloat(inflationInput.value) || 0;
             const returnRate = parseFloat(rateInput.value) || 0;
 
-            // Enforce realistic bounds dynamically
+            // Enforce realistic logic protection bounds
             if (retAge <= curAge) {
                 retAge = curAge + 1;
                 retirementAgeInput.value = retAge;
@@ -320,33 +312,36 @@
             const distributionYears = lifeExp - retAge;
             
             const totalAccumulationMonths = accumulationYears * 12;
+
+            const r_annual = returnRate / 100;
+            const inf_annual = inflationRate / 100;
+
+            // Step 1: Calculate dynamic inflation-adjusted monthly expenses on retirement date
+            const inflationAdjustedMonthlyExpense = curExpenses * Math.pow(1 + inf_annual, accumulationYears);
+
+            // Step 2: Compute Target Required Corpus at retirement age using an Annuity Due model 
+            // calculated against the Real Rate of Return to safeguard purchasing power post-retirement.
+            const realRate = ((1 + r_annual) / (1 + inf_annual)) - 1;
+            const r_monthly_real = Math.pow(1 + realRate, 1 / 12) - 1;
             const totalDistributionMonths = distributionYears * 12;
-
-            const r_monthly = (returnRate / 100) / 12;
-            const inf_monthly = (inflationRate / 100) / 12;
-
-            // 1. Calculate Future inflation-adjusted monthly expenses at retirement day
-            const inflationAdjustedMonthlyExpense = curExpenses * Math.pow(1 + (inflationRate / 100), accumulationYears);
-
-            // 2. Compute Target Required Corpus at retirement age using Annuity Due (payments at start of month)
-            // Real rate of return adjusts portfolio yields against active inflation decay post retirement
-            const realRateMonthly = (1 + r_monthly) / (1 + inf_monthly) - 1;
             
             let requiredCorpus = 0;
-            if (realRateMonthly !== 0) {
-                requiredCorpus = inflationAdjustedMonthlyExpense * ((1 - Math.pow(1 + realRateMonthly, -totalDistributionMonths)) / realRateMonthly) * (1 + realRateMonthly);
+            if (r_monthly_real !== 0) {
+                requiredCorpus = inflationAdjustedMonthlyExpense * ((1 - Math.pow(1 + r_monthly_real, -totalDistributionMonths)) / r_monthly_real) * (1 + r_monthly_real);
             } else {
                 requiredCorpus = inflationAdjustedMonthlyExpense * totalDistributionMonths;
             }
 
-            // 3. Compute Future Compound Value of existing capital asset pool at retirement milestone
-            const futureValueSavings = curSavings * Math.pow(1 + (returnRate / 100), accumulationYears);
+            // Step 3: Compound existing savings assets forward to the retirement start line
+            const futureValueSavings = curSavings * Math.pow(1 + r_annual, accumulationYears);
 
-            // 4. Extract net deficit target metric
+            // Step 4: Isolate net deficit shortfall
             const additionalSavingsRequired = Math.max(0, requiredCorpus - futureValueSavings);
 
-            // 5. Compute corresponding periodic monthly SIP framework to achieve target deficit
+            // Step 5: Derive targeted regular monthly SIP allocation required to bridge the remaining deficit
             let requiredMonthlySip = 0;
+            const r_monthly = Math.pow(1 + r_annual, 1 / 12) - 1;
+            
             if (additionalSavingsRequired > 0 && totalAccumulationMonths > 0) {
                 if (r_monthly !== 0) {
                     requiredMonthlySip = additionalSavingsRequired * r_monthly / ((Math.pow(1 + r_monthly, totalAccumulationMonths) - 1) * (1 + r_monthly));
@@ -355,13 +350,13 @@
                 }
             }
 
-            // Render calculations into target container fields
-            displayRequired.innerText = formatCompactINR(requiredCorpus);
-            displayAdditional.innerText = formatCompactINR(additionalSavingsRequired);
-            displaySip.innerText = formatCompactINR(requiredMonthlySip);
-            chartCenterText.innerText = formatCompactINR(requiredCorpus);
+            // Render out dynamic updates seamlessly into targeted text layouts
+            displayRequired.innerText = formatINR(requiredCorpus);
+            displayAdditional.innerText = formatINR(additionalSavingsRequired);
+            displaySip.innerText = formatINR(requiredMonthlySip);
+            chartCenterText.innerText = formatINR(requiredCorpus);
 
-            // Dynamic pie segment adjustment 
+            // Dynamically update segment values inside chart elements array context
             retirementChart.data.datasets[0].data = [
                 Math.round(Math.min(requiredCorpus, futureValueSavings)), 
                 Math.round(additionalSavingsRequired)
@@ -369,21 +364,21 @@
             retirementChart.update();
         }
 
-        // Standardized cross sync input controls mechanism from base template[cite: 6]
+        // Synchronize components input interface loops
         function syncControl(slider, input) {
-            slider.addEventListener('input', () => { input.value = slider.value; calculateRetirementText(); });
+            slider.addEventListener('input', () => { input.value = slider.value; calculateRetirement(); });
             input.addEventListener('input', () => {
                 if(input.value === '') return;
                 let val = parseFloat(input.value);
                 if(val < parseFloat(input.min)) val = parseFloat(input.min);
                 if(val > parseFloat(input.max)) val = parseFloat(input.max);
                 slider.value = val;
-                calculateRetirementText();
+                calculateRetirement();
             });
             input.addEventListener('blur', () => {
                 if(input.value === '' || parseFloat(input.value) < parseFloat(input.min)) input.value = input.min;
                 slider.value = input.value;
-                calculateRetirementText();
+                calculateRetirement();
             });
         }
 
@@ -395,8 +390,8 @@
         syncControl(inflationSlider, inflationInput);
         syncControl(rateSlider, rateInput);
 
-        // Execute processing loop on view layout initialization
-        calculateRetirementText();
+        // Run execution loop on window init bootstrap
+        calculateRetirement();
     </script>
 </body>
 </html>
