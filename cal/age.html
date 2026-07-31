@@ -59,22 +59,30 @@
                 <div class="w-full flex-grow flex flex-col justify-center space-y-3 my-2">
                     <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider text-center mb-1">Total Lifetime Breakdown</h2>
                     
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
                             <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Months</span>
-                            <span class="text-sm sm:text-base font-bold text-slate-800" id="totalMonths">0</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-800" id="totalMonths">0</span>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
                             <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Weeks</span>
-                            <span class="text-sm sm:text-base font-bold text-slate-800" id="totalWeeks">0</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-800" id="totalWeeks">0</span>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
                             <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Days</span>
-                            <span class="text-sm sm:text-base font-bold text-slate-800" id="totalDays">0</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-800" id="totalDays">0</span>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
                             <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Hours</span>
-                            <span class="text-sm sm:text-base font-bold text-slate-800" id="totalHours">0</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-800" id="totalHours">0</span>
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Minutes</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-800" id="totalMinutes">0</span>
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold mb-0.5">Total Seconds</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600" id="totalSeconds">0</span>
                         </div>
                     </div>
                 </div>
@@ -120,7 +128,7 @@
 
         <div class="mt-12 bg-black/[0.03] backdrop-blur-sm p-6 rounded-2xl border border-slate-200/80">
             <p class="text-xs text-black leading-relaxed font-semibold">
-                Age calculations account for leap years and exact month-end variations dynamically.<br class="hidden md:block">
+                Age calculations account for leap years, exact month-end variations, and real-time millisecond accuracy dynamically.<br class="hidden md:block">
                 All metrics are computed based on local system timestamps.
             </p>
         </div>
@@ -144,11 +152,15 @@
         const totalWeeks = document.getElementById('totalWeeks');
         const totalDays = document.getElementById('totalDays');
         const totalHours = document.getElementById('totalHours');
+        const totalMinutes = document.getElementById('totalMinutes');
+        const totalSeconds = document.getElementById('totalSeconds');
         const nextBirthdayText = document.getElementById('nextBirthdayText');
 
+        let liveTicker = null;
+
         // Set default values (DOB: 2000-01-01, Target: Today)
-        const today = new Date();
-        targetDateInput.value = today.toISOString().split('T')[0];
+        const todayStr = new Date().toISOString().split('T')[0];
+        targetDateInput.value = todayStr;
         dobInput.value = '2000-01-01';
 
         function getDaysInMonth(year, month) {
@@ -158,10 +170,10 @@
         function calculateAge() {
             if (!dobInput.value || !targetDateInput.value) return;
 
-            const dob = new Date(dobInput.value);
-            const target = new Date(targetDateInput.value);
+            const dobDateOnly = new Date(dobInput.value);
+            const targetDateOnly = new Date(targetDateInput.value);
 
-            if (target < dob) {
+            if (targetDateOnly < dobDateOnly) {
                 errorMessage.classList.remove('hidden');
                 displayYears.innerText = '0';
                 displayMonths.innerText = '0';
@@ -170,21 +182,24 @@
                 totalWeeks.innerText = '0';
                 totalDays.innerText = '0';
                 totalHours.innerText = '0';
+                totalMinutes.innerText = '0';
+                totalSeconds.innerText = '0';
                 nextBirthdayText.innerText = 'Next Birthday in: --';
+                if (liveTicker) clearInterval(liveTicker);
                 return;
             } else {
                 errorMessage.classList.add('hidden');
             }
 
-            let birthYear = dob.getFullYear();
-            let birthMonth = dob.getMonth();
-            let birthDay = dob.getDate();
+            // Primary Date Math
+            let birthYear = dobDateOnly.getFullYear();
+            let birthMonth = dobDateOnly.getMonth();
+            let birthDay = dobDateOnly.getDate();
 
-            let targetYear = target.getFullYear();
-            let targetMonth = target.getMonth();
-            let targetDay = target.getDate();
+            let targetYear = targetDateOnly.getFullYear();
+            let targetMonth = targetDateOnly.getMonth();
+            let targetDay = targetDateOnly.getDate();
 
-            // 1. Calculate Primary Age (Years, Months, Days)
             let calculatedDays = targetDay - birthDay;
             if (calculatedDays < 0) {
                 targetMonth--;
@@ -204,36 +219,55 @@
 
             let calculatedYears = targetYear - birthYear;
 
-            // 2. Calculate Secondary Breakdown Stats
-            const diffTime = Math.abs(target - dob);
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            const diffWeeks = (diffDays / 7).toFixed(1);
-            const diffTotalMonths = (calculatedYears * 12) + calculatedMonths;
-            const diffHours = (diffDays * 24).toLocaleString('en-IN');
-
-            // 3. Calculate Next Birthday Countdown
-            let nextBirthday = new Date(target.getFullYear(), birthMonth, birthDay);
-            if (nextBirthday < target) {
-                nextBirthday.setFullYear(target.getFullYear() + 1);
-            }
-            const nextBdayDiffDays = Math.ceil((nextBirthday - target) / (1000 * 60 * 60 * 24));
-            const nextBdayMonths = Math.floor(nextBdayDiffDays / 30.4375);
-            const nextBdayDays = Math.round(nextBdayDiffDays % 30.4375);
-
-            // Update DOM
+            // DOM Updates for Years/Months/Days
             displayYears.innerText = calculatedYears;
             displayMonths.innerText = calculatedMonths;
             displayDays.innerText = calculatedDays;
 
-            totalMonths.innerText = diffTotalMonths.toLocaleString('en-IN');
-            totalWeeks.innerText = diffWeeks;
-            totalDays.innerText = diffDays.toLocaleString('en-IN');
-            totalHours.innerText = diffHours;
+            // Next Birthday Calculation
+            let nextBirthday = new Date(targetDateOnly.getFullYear(), birthMonth, birthDay);
+            if (nextBirthday < targetDateOnly) {
+                nextBirthday.setFullYear(targetDateOnly.getFullYear() + 1);
+            }
+            const nextBdayDiffDays = Math.ceil((nextBirthday - targetDateOnly) / (1000 * 60 * 60 * 24));
+            const nextBdayMonths = Math.floor(nextBdayDiffDays / 30.4375);
+            const nextBdayDays = Math.round(nextBdayDiffDays % 30.4375);
 
             if (nextBdayDiffDays === 0 || nextBdayDiffDays === 365) {
                 nextBirthdayText.innerText = "🎉 Happy Birthday Today!";
             } else {
                 nextBirthdayText.innerText = `Next Birthday in: ${nextBdayMonths}m ${nextBdayDays}d`;
+            }
+
+            // Real-time update logic
+            if (liveTicker) clearInterval(liveTicker);
+
+            const isToday = targetDateInput.value === new Date().toISOString().split('T')[0];
+
+            function updateDetailedMetrics() {
+                const now = isToday ? new Date() : new Date(targetDateInput.value + 'T23:59:59');
+                const dob = new Date(dobInput.value + 'T00:00:00');
+
+                const diffTime = Math.max(0, now - dob);
+                const diffSeconds = Math.floor(diffTime / 1000);
+                const diffMinutes = Math.floor(diffSeconds / 60);
+                const diffHours = Math.floor(diffMinutes / 60);
+                const diffDays = Math.floor(diffHours / 24);
+                const diffWeeks = (diffDays / 7).toFixed(1);
+                const diffTotalMonths = (calculatedYears * 12) + calculatedMonths;
+
+                totalMonths.innerText = diffTotalMonths.toLocaleString('en-IN');
+                totalWeeks.innerText = diffWeeks;
+                totalDays.innerText = diffDays.toLocaleString('en-IN');
+                totalHours.innerText = diffHours.toLocaleString('en-IN');
+                totalMinutes.innerText = diffMinutes.toLocaleString('en-IN');
+                totalSeconds.innerText = diffSeconds.toLocaleString('en-IN');
+            }
+
+            updateDetailedMetrics();
+
+            if (isToday) {
+                liveTicker = setInterval(updateDetailedMetrics, 1000);
             }
         }
 
