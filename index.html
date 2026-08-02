@@ -30,6 +30,25 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
+    <!-- Top Navigation Bar with Logo at Top-Left -->
+    <nav class="w-full bg-white border-b border-slate-100 py-3 px-4 sm:px-8">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <!-- Replace 'assets/logo.png' or SVG path with your actual logo image file path -->
+                <img src="assets/logo.png" alt="Logo" class="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105" onError="this.onerror=null; this.remove(); document.getElementById('fallback-logo-icon').classList.remove('hidden');">
+                
+                <!-- Dynamic Fallback Icon Badge in case logo image file isn't uploaded yet -->
+                <div id="fallback-logo-icon" class="hidden p-2 bg-indigo-600 text-white rounded-xl shadow-sm">
+                    <i class="fa-solid fa-calculator text-lg"></i>
+                </div>
+                
+                <span class="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight">
+                    Calculators<span class="text-indigo-600">Hub</span>
+                </span>
+            </a>
+        </div>
+    </nav>
+
     <!-- Header Section -->
     <header class="bg-white border-b border-slate-100 py-12 px-4 text-center">
         <div class="max-w-4xl mx-auto">
@@ -88,7 +107,6 @@
                 </div>
             </a>
 
-            
             <!-- 8. Age Cal. -->
             <a href="cal/age.html" class="color-card bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-500 flex items-start space-x-4">
                 <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100">
