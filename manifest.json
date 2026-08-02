@@ -1,6 +1,6 @@
 {
-  "name": "Calculators Hub",
-  "short_name": "CalcHub",
+  "name": "Varavi Calculators",
+  "short_name": "Varavi Calculators",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
