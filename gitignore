@@ -1,0 +1,8 @@
+node_modules
+.next
+.env*
+build
+dist
+
+# Ensure dotfiles inside public are tracked
+!public/.well-known/
