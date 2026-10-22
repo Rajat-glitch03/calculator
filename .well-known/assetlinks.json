@@ -1,11 +1,8 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.varavifinancialservices.calculators",
-      "sha256_cert_fingerprints":
-        ["11:BF:45:BC:BE:8A:DC:31:D4:82:56:F0:21:88:82:10:78:43:8C:E0:EF:3C:38:80:1E:10:87:79:72:0B:81:38"]
-    }
-  }
-]
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.varavifinancialservices.calculators",
+        "sha256_cert_fingerprints": ["B9:E1:CF:83:CB:AD:5C:11:A0:7A:17:B5:33:2A:CB:97:13:C2:A7:9D:9F:1B:42:CB:E8:15:1A:AC:28:78:BF:1F"]
+      }
+    }]
