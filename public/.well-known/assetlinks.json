@@ -2,7 +2,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "app.vercel.calculator_five_nu_rpyc1xplu5.twa",
+        "package_name": "com.varavifinancialservices.calculators",
         "sha256_cert_fingerprints": ["59:CB:0C:74:73:52:2C:E4:5D:6A:12:38:4F:2E:B7:8B:5B:8C:59:8A:24:A7:AD:FE:CB:82:6C:55:C9:5F:83:BE"]
       }
     }]
